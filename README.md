@@ -1,30 +1,23 @@
 # FM Skin Builder Documentation
 
+[![CI](https://github.com/lotsgon/docs-fm-skin-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/lotsgon/docs-fm-skin-builder/actions/workflows/ci.yml)
+
 Official documentation for [FM Skin Builder](https://fmskinbuilder.com).
 
 ## Contributing
 
-We welcome documentation contributions! To get started:
+We welcome documentation contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full guide.
 
-1. Fork this repository
-2. Create a branch for your changes
-3. Edit or add `.mdx` pages in `src/app/docs/`
-4. Submit a pull request
-
-### Local Development
+### Quick Start
 
 ```bash
-npm install
+git clone https://github.com/<your-username>/docs-fm-skin-builder.git
+cd docs-fm-skin-builder
+npm install --legacy-peer-deps
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to preview your changes.
-
-### Writing Docs
-
-- Pages are written in [MDX](https://mdxjs.com/) (Markdown with JSX)
-- Navigation is defined in `src/app/_meta.global.tsx`
-- Place new pages in the appropriate section directory under `src/app/docs/`
+Pages are written in [MDX](https://mdxjs.com/) and live in `src/app/` organised by section. Navigation is defined in `src/app/_meta.global.tsx`.
 
 ## License
 
