@@ -1,0 +1,375 @@
+---
+title: Common Issues
+description: Solutions to frequently encountered problems.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Common Issues
+
+This page covers the most frequently encountered issues and their solutions.
+
+## Installation Issues
+
+### "App won't open" (Windows)
+
+**Symptom:** Windows SmartScreen blocks the app.
+
+**Solution:**
+1. Click "More info" in the warning dialog
+2. Click "Run anyway"
+3. The app will open normally
+
+<ScreenshotPlaceholder
+  id="windows-smartscreen"
+  alt="Windows SmartScreen warning"
+  caption="Click More info, then Run anyway"
+/>
+
+**Why:** The app isn't digitally signed. It's safe to run.
+
+---
+
+### "Cannot be opened" (macOS)
+
+**Symptom:** macOS Gatekeeper blocks the app.
+
+**Solution:**
+1. Open terminal and run:
+```bash 
+xattr -cr "/Applications/FM Skin Builder.app"
+```
+
+**Alternative:**
+1. System Preferences > Security & Privacy
+2. Click "Open Anyway" for FM Skin Builder
+
+
+**Why:** The app isn't digitally signed. It's safe to run.
+
+---
+
+### App crashes on launch
+
+**Checklist:**
+- OS meets minimum requirements (Windows 10+, macOS 11+, Ubuntu 20.04+)
+- Downloaded the correct version for your platform
+- Not running from a compressed archive
+
+**Try:**
+1. Redownload the installer
+2. Run as administrator (Windows)
+3. Check Console for errors (macOS)
+
+---
+
+## Build Issues
+
+### "Bundle directory not found"
+
+**Symptom:**
+```
+✗ Error: Could not auto-detect Football Manager bundle directory
+```
+
+**Solution:**
+1. Go to Settings > Paths
+2. Click Browse next to FM Installation Path
+3. Navigate to your FM26 installation
+
+**Common paths:**
+
+| Platform | Path |
+|----------|------|
+| Windows (Steam) | `C:\Program Files (x86)\Steam\steamapps\common\Football Manager 26` |
+| Windows (Epic) | `C:\Program Files\Epic Games\Football Manager 26` |
+| Windows (Game Pass) | `C:\XboxGames\Football Manager 26\Content\fm_Data\StreamingAssets\aa\StandaloneWindows64\` |
+| macOS (Steam) | `~/Library/Application Support/Steam/steamapps/common/Football Manager 26` |
+| Linux (Steam) | `~/.steam/steam/steamapps/common/Football Manager 26` |
+
+---
+
+### "config.json not found"
+
+**Symptom:**
+```
+✗ Error: config.json not found in skin folder
+```
+
+**Solution:**
+1. Open the correct project folder
+2. Create config.json if missing:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin"
+}
+```
+
+---
+
+### "Invalid config.json"
+
+**Symptom:** JSON syntax or schema errors.
+
+**Common fixes:**
+
+```json
+// Missing comma
+{
+  "schema_version": 1
+  "name": "My Skin"    // ← Add comma above
+}
+
+// Trailing comma
+{
+  "schema_version": 1,
+  "name": "My Skin",   // ← Remove comma
+}
+
+// schema_version as string
+{
+  "schema_version": "2"  // ← Should be: 2 (number)
+}
+```
+
+**Validate:** Use [jsonlint.com](https://jsonlint.com/)
+
+---
+
+### "No CSS files found"
+
+**Symptom:**
+```
+✗ Error: No CSS/USS files found in skin folder
+```
+
+**Solution:**
+1. Create a `styles/` folder
+2. Create a `.uss` file inside
+```
+my-skin/
+├── config.json
+└── styles/
+    └── base.uss
+```
+3. Create a `mapping.json` file inside and add a mapping:
+```json
+{
+  "base.uss": "UIStyles"
+}
+```
+
+---
+
+## Color Issues
+
+### Colors not changing
+
+**Symptom:** Built successfully but FM looks the same.
+
+**Checklist:**
+
+1. **Check variable names:**
+   ```css
+   /* May not work - custom name */
+   --my-primary: #ff0000;
+
+   /* Use FM's actual variable names */
+   --primary: #ff0000;
+   ```
+
+2. **Check CSS syntax:**
+   ```css
+   /* Missing semicolon */
+   --primary: #ff0000
+   --secondary: #00ff00;
+
+   /* Correct */
+   --primary: #ff0000;
+   --secondary: #00ff00;
+   ```
+
+3. **Verify build output:**
+   - Check `packages/` folder has files
+   - Files have recent timestamps
+
+---
+
+### Some colors changed, others didn't
+
+**Why:** Different stylesheets may use different variable names.
+
+**Solutions:**
+1. Check [Asset Catalogue](/catalogue) for correct names
+2. Use Debug Mode to see available variables
+3. Try broader variable names
+
+---
+
+### Colors look wrong (washed out)
+
+**Possible causes:**
+
+1. **Accidental alpha channel:**
+   ```css
+   /* This has 80% opacity (cc = 204/255) */
+   --primary: #ff0000cc;
+
+   /* This is fully opaque */
+   --primary: #ff0000;
+   ```
+
+2. **Wrong color format:**
+   ```css
+   /* Hex recommended */
+   --primary: #ff0000;
+
+   /* RGB may have issues */
+   --primary: rgb(255, 0, 0);
+   ```
+
+---
+
+## Asset Issues
+
+### Icons not appearing
+
+**Checklist:**
+
+1. **Folder structure:**
+   ```
+   assets/
+   └── icons/
+       ├── my-icon.png
+       └── mapping.json
+   ```
+
+2. **Config includes folder:**
+   ```json
+   {
+     "includes": ["assets/icons"]
+   }
+   ```
+
+3. **Mapping syntax:**
+   ```json
+   {
+     "my-icon.png": "star_*"    // No file extension
+   }
+   ```
+
+4. **File format:** PNG or SVG (not JPG for icons)
+
+---
+
+### Mapping not working
+
+**Common issues:**
+
+1. **Extension in mapping:**
+   ```json
+   // Wrong
+   "star_*": "my-icon.png"
+
+   // Correct
+   "my-icon.png": "star_*"
+   ```
+
+2. **Case sensitivity:** Names are case-sensitive on macOS/Linux
+
+3. **Wrong original name:** Use Asset Catalogue to find correct names
+
+---
+
+## Performance Issues
+
+### First build very slow
+
+**Expected:** First build scans all bundles (300+). Takes 30 seconds to 2 minutes.
+
+**Subsequent builds** should be faster (5-15 seconds) using cache.
+
+---
+
+### Every build is slow
+
+**Cache not working:**
+
+1. Check `.cache/` folder exists in project
+2. Verify write permissions
+3. Try Clean Build once, then normal builds
+
+---
+
+## FM-Related Issues
+
+### FM crashes with skin
+
+**Immediate fix:**
+1. Restore Original bundles via FM Skin Builder
+2. Restart FM (uses default skin)
+
+**Then investigate:**
+1. Use Preview Build to check for issues
+2. Make smaller changes
+3. Test incrementally
+
+---
+
+### FM display glitches
+
+1. Restart FM completely
+2. Verify skin doesn't have corrupted files
+3. Check for UXML errors if using custom layouts
+
+---
+
+## Error Messages
+
+### "Cannot write to packages/"
+
+**Cause:** Permission issue or folder in use.
+
+**Solutions:**
+1. Close any file explorers in that folder
+2. Check folder isn't read-only
+3. Run FM Skin Builder as administrator (Windows)
+
+---
+
+### "CSS parse error"
+
+**Location:** Check the line number in the error.
+
+**Common causes:**
+- Missing semicolon
+- Missing closing brace
+- Invalid property name
+- Invalid value
+
+---
+
+### "Include path not found"
+
+**The folder in `includes` doesn't exist.**
+
+**Solutions:**
+1. Create the folder
+2. Remove from config if not needed
+3. Check path spelling
+
+---
+
+## Still Having Issues?
+
+1. **Use Debug Mode** - Compare output files
+2. **Check exact error messages** - Copy them for reference
+3. **Simplify and test** - Remove changes until it works
+4. **Search the docs** - Use the search feature
+5. **Report issues** - GitHub issues for bugs
+6. **Join the community** - Discord for help
+
+---

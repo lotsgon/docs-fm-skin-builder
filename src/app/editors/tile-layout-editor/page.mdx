@@ -1,0 +1,192 @@
+---
+title: Tile Layout Editor
+description: Configure grid-based layouts in Football Manager.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Tile Layout Editor
+
+The Tile Layout Editor helps you configure grid-based layouts in FM - areas where content is displayed in a tile/card arrangement rather than a table.
+
+## What are Tile Layouts?
+
+Tile layouts display information in a grid of cards or panels:
+
+- Player card grids
+- Team overview panels
+- News feed layouts
+- Trophy displays
+
+<ScreenshotPlaceholder
+  id="tile-layout-example"
+  alt="Example tile layout in FM"
+  caption="A grid of player cards in FM"
+/>
+
+## Opening the Tile Layout Editor
+
+- Single-click a tile layout JSON file
+- These are typically in a `tile-layouts/` folder
+
+<ScreenshotPlaceholder
+  id="tile-layout-editor-overview"
+  alt="Tile Layout Editor interface"
+  caption="The Tile Layout Editor showing grid configuration"
+/>
+
+## Simple Mode
+
+Simple Mode provides visual grid configuration.
+
+<ScreenshotPlaceholder
+  id="tile-layout-simple"
+  alt="Tile Layout Editor Simple Mode"
+  caption="Visual grid editor with preview"
+/>
+
+### Grid Preview
+
+The preview panel shows your layout:
+
+- Tiles displayed in configured arrangement
+- Spacing visualized
+- Resize handles for adjustment
+
+### Configuration Panel
+
+Edit grid properties:
+
+| Property | Description |
+|----------|-------------|
+| Columns | Number of columns in the grid |
+| Rows | Number of rows in the grid |
+| Width | Width of each tile |
+| Height | Height of each tile |
+| X Position | Horizontal position |
+| Y Position | Vertical position |
+
+<ScreenshotPlaceholder
+  id="tile-layout-config"
+  alt="Grid configuration panel"
+  caption="Configure grid dimensions and spacing"
+/>
+
+### Visual Adjustments
+
+Drag handles in the preview to adjust:
+
+- **Corner handles**: Resize tiles
+- **Drag drop**: Move tiles within the grid
+
+## Expert Mode
+
+Expert Mode shows the raw JSON configuration.
+
+<ScreenshotPlaceholder
+  id="tile-layout-expert"
+  alt="Tile Layout Editor Expert Mode"
+  caption="JSON view of tile configuration"
+/>
+
+### JSON Structure
+
+```json
+{
+  "grid": {
+    "width": 20,
+    "height": 10
+  },
+  "tiles": [
+    {
+      "tile": "PortalMessagesTile",
+      "x": 0,
+      "y": 0,
+      "w": 6,
+      "h": 10
+    },
+    {
+      "tile": "CalendarTile_4x4",
+      "x": 6,
+      "y": 6,
+      "w": 4,
+      "h": 4
+    }
+  ]
+}
+```
+
+### Grid Properties
+
+```json
+{
+  "grid": {
+    "width": 20,     // Total grid width in units
+    "height": 10     // Total grid height in units
+  },
+}
+```
+
+### Tile Options
+
+```json
+{
+    {
+      "tile": "CalendarTile_4x4",   // Tile identifier
+      "x": 6,                       // X position in grid units
+      "y": 6,                       // Y position in grid units
+      "w": 4,                       // Tile width in grid units
+      "h": 4                        // Tile height in grid units
+    }
+}
+```
+
+## Tips and Best Practices
+
+### Consider Content Size
+
+Tiles should fit their content:
+
+| Content | Minimum Size |
+|---------|--------------|
+| Small icon only | 64x64 |
+| Icon + text | 100x100 |
+| Player card | 180x220 |
+| Detailed card | 250x300 |
+
+
+### Test at Different Sizes
+
+Grids may look different on various screens:
+
+1. Test at minimum window size
+2. Test at maximum/fullscreen
+3. Adjust columns if needed
+
+## Troubleshooting
+
+### "Tiles overlapping"
+
+- Tile dimensions too large for columns
+- Reduce tile size or number of columns
+
+### "Large gaps between tiles"
+
+- Container width doesn't divide evenly
+- Adjust tile width or gap size
+
+### "Tiles cut off"
+
+- Tile height too small for content
+- Increase tileHeight
+
+### "Layout looks wrong"
+
+- Check JSON syntax
+- Verify all required properties present
+- Compare with working examples
+
+---
+
+**Next:** [Inline Style Editor](/editors/inline-style-editor) - Apply styles to specific elements.

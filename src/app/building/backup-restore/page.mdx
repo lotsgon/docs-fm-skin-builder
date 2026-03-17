@@ -1,0 +1,160 @@
+---
+title: Backup & Restore
+description: Protect your FM game files and restore from issues.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Backup & Restore
+
+FM Skin Builder can modify game files. While skins are installed in a separate directory, it's important to understand backup and restore options.
+
+## Understanding the Risk
+
+### What FM Skin Builder Modifies
+
+FM Skin Builder only modifies game files when you apply to game. It writes modified bundles to FM's skins directory.
+
+### When Issues Can Occur
+
+Potential problems:
+- Corrupted skin files cause FM display issues
+- Bad UXML changes crash FM's UI
+- Skin prevents FM from starting properly
+- If you dont restore backups, you will be building over your existing skin which could cause issues
+
+### Recovery is Usually Simple
+
+Most issues are solved by:
+1. Restoring the backup
+2. Verifying game files via Steam/Epic/Gamepass
+
+## FM Skin Builder Backup Features
+
+### Game Path Detection
+
+FM Skin Builder automatically finds your FM installation:
+
+<ScreenshotPlaceholder
+  id="game-path-setting"
+  alt="Game path configuration"
+  caption="FM installation path in Settings"
+/>
+
+### Creating Backups
+
+FM Skin Builder creates backups automatically before operations. You can clear these backups in settings.
+
+### Backup Contents
+
+When enabled, backups include:
+- Previous skin bundle contents
+- Timestamp for identification
+- Manifest of what was backed up
+
+```
+.backups/
+├── 2024-01-15_14-30-00/
+│   ├── manifest.json
+│   └── my-skin/
+│       └── [previous files]
+```
+
+### Restoring from Backup
+
+1. Settings > Backups > Clear backups
+
+<ScreenshotPlaceholder
+  id="restore-dialog"
+  alt="Restore from backup dialog"
+  caption="Select a backup to restore"
+/>
+
+## Manual Recovery Options
+
+### Restore to backup
+
+1. Go to Build > Game Output
+2. Click "Restore Original"
+
+## Steam File Verification
+
+If FM's original files are somehow affected:
+
+### Using Steam
+
+1. Open Steam
+2. Right-click Football Manager 2026
+3. Properties > Local Files
+4. Click "Verify integrity of game files"
+5. Steam redownloads any modified/missing files
+
+<ScreenshotPlaceholder
+  id="steam-verify"
+  alt="Steam verify files option"
+  caption="Steam's file verification option"
+/>
+
+### Epic Games
+
+1. Open Epic Games Launcher
+2. Find Football Manager 2026
+3. Click the three dots menu
+4. Select "Verify"
+
+## Best Practices
+
+### During Development
+
+1. **Always restore original** in FM Skin Builder game output before building new builds
+2. **Test incrementally** - small changes, frequent builds
+3. **Keep previous working version** before major changes
+
+## Troubleshooting
+
+### Can't Find Backup Folder
+
+Check FM Skin Builder's data directory:
+
+| Platform | Location |
+|----------|----------|
+| Windows | `%APPDATA%\FM Skin Builder\.backups\` |
+| macOS | `~/Library/Application Support/FM Skin Builder/.backups/` |
+| Linux | `~/.config/FM Skin Builder/.backups/` |
+
+Or look in your project folder for `.backups/` directory.
+
+## When to Use Each Recovery Method
+
+| Situation | Solution |
+|-----------|----------|
+| Want previous version of your skin | Use your manually created backup |
+| Skin causes minor visual issues | Remove skin, fix, reinstall |
+| FM won't start | Restore original bundles or verify game files |
+| Suspect FM files are corrupted | Steam/Epic verification |
+| Lost your source files | Check backups |
+
+## Prevention Tips
+
+### Test in Preview First
+
+Use [Preview Build](/building/preview-build) to catch errors before installation.
+
+### Keep Working Versions
+
+When you have a working skin:
+1. Manually save a copy of `packages/`
+
+### Don't Edit in Bundles Folder
+
+Always:
+1. Edit in your project folder
+2. Build to generate `packages/`
+3. Install to bundles folder
+
+Never edit directly in FM's bundles directory unless you know what you're doing.
+
+---
+
+**Next:** [Reference](/reference) - Technical reference documentation.

@@ -1,0 +1,250 @@
+---
+title: File Browser
+description: Navigate and manage your skin project files using the Explorer panel.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# File Browser
+
+The Explorer panel is your primary tool for navigating and managing project files. Learn to use it efficiently for faster skin development.
+
+## Explorer Panel Overview
+
+Access the Explorer by clicking the Files icon in the Activity Bar.
+
+<ScreenshotPlaceholder
+  id="explorer-overview"
+  alt="Explorer panel showing project structure"
+  caption="The Explorer panel displays your project's file tree"
+/>
+
+### Panel Sections
+
+The Explorer may show multiple sections:
+
+| Section | Purpose |
+|---------|---------|
+| **Open Editors** | Currently open files (collapsible) |
+| **Project Name** | Your skin project's file tree |
+
+## Navigating Files
+
+### Opening Files
+
+- **Single-click:** Open file (persistent tab)
+
+### Expanding/Collapsing
+
+- Click the arrow icon to expand/collapse folders
+- Single-click folder name to toggle
+
+## File Operations
+
+### Creating Files and Folders
+
+**Via Context Menu:**
+1. Right-click a folder (or empty space)
+2. Select "New File" or "New Folder"
+3. Type the name and press Enter
+
+<ScreenshotPlaceholder
+  id="context-menu-new-file"
+  alt="Context menu showing New File option"
+  caption="Right-click to create new files and folders"
+/>
+
+**Via Toolbar:**
+1. Use the buttons in the Explorer File Tree Toolbar
+2. Click the New File or New Folder icon
+
+### Renaming
+
+1. Right-click > Rename
+2. Edit the name
+3. Press Enter to confirm, Escape to cancel
+
+**Tips:**
+- Rename updates all open editor tabs
+- Renaming `.uss` to `.css` (or vice versa) works seamlessly
+
+### Deleting
+
+1. Right-click > Delete
+2. Confirm the deletion
+
+**Warning:** Deletion is permanent. There's no undo. The file is not moved to trash.
+
+<ScreenshotPlaceholder
+  id="delete-confirmation"
+  alt="Delete confirmation dialog"
+  caption="Confirm before deleting files"
+/>
+
+### Moving Files
+
+**Drag and Drop:**
+1. Click and drag a file
+2. Drop onto target folder
+3. File moves to new location
+
+**Cut and Paste:**
+1. Right-click > Cut
+2. Navigate to destination folder
+3. Right-click > Paste
+
+### Copying Files
+
+1. Right-click > Copy
+2. Navigate to destination
+3. Right-click > Paste
+4. A copy is created with a suffix if name conflicts
+
+### Duplicating
+
+Right-click > Duplicate creates a copy in the same folder with "(copy)" suffix.
+
+## Context Menu Reference
+
+Right-click any file or folder for these options:
+
+| Option | Description |
+|--------|-------------|
+| New File | Create file in this location |
+| New Folder | Create folder in this location |
+| Import Files here | Import files into this location |
+| Copy | Copy file (use with Paste) |
+| Cut | Move file (use with Paste) |
+| Paste | Complete cut/copy operation |
+| Rename | Change file/folder name |
+| Delete | Remove file/folder |
+| Reveal in Finder/Explorer | Open containing folder in OS |
+
+## File Icons
+
+Files show type-specific icons:
+
+| Icon | File Type |
+|------|-----------|
+| CSS brackets | `.uss`, `.css` files |
+| Angle brackets | `.uxml` files |
+| JSON braces | `.json` files |
+| Image | `.png`, `.jpg`, `.svg` |
+
+<ScreenshotPlaceholder
+  id="file-icons"
+  alt="File icons in Explorer"
+  caption="Visual icons help identify file types quickly"
+/>
+
+## Special Folders
+
+### styles/
+
+The standard location for CSS/USS files:
+- FM Skin Builder scans this folder for stylesheets
+- Supports nested subfolders
+
+### graphics/
+
+Contains replaceable assets:
+- `graphics/icons/` - Icon replacements
+- `graphics/backgrounds/` - Background images
+- Each subfolder should contain a `mapping.json`
+
+### fonts/
+
+The standard location for font files:
+- FM Skin Builder scans this folder for fonts
+- Supports nested subfolders
+
+### panels/
+
+The standard location for panel files:
+- FM Skin Builder scans this folder for panels
+- Does not support nested subfolders or mapping.json
+
+### table-views/
+
+The standard location for table view files:
+- FM Skin Builder scans this folder for table views
+- Does not support nested subfolders or mapping.json
+
+### tile-layouts/
+
+The standard location for tile layout files:
+- FM Skin Builder scans this folder for tile layouts
+- Does not support nested subfolders or mapping.json
+
+### packages/
+
+**Auto-generated** build output:
+- Created when you build
+- Contains modified bundle files
+- Don't edit files here directly
+- Safe to delete (rebuilding recreates it)
+
+<ScreenshotPlaceholder
+  id="packages-folder"
+  alt="Packages folder after build"
+  caption="The packages folder contains your built skin files"
+/>
+
+## Drag and Drop from OS
+
+You can drag files from your operating system into the Explorer:
+
+1. Drag files from Finder/File Explorer
+2. Drop onto a folder in the Explorer
+3. Files are copied to that location
+
+**Use cases:**
+- Add icon PNG files to `graphics/icons/`
+- Import CSS files from another project
+- Add background images
+
+## Workspace Organization Tips
+
+### Organize by Purpose
+
+```
+my-skin/
+├── styles/
+│   ├── base.uss          # Global colors
+│   ├── buttons.uss       # Button styles
+│   ├── match.uss         # Match screen colors
+│   └── mapping.json
+├── graphics/
+│   ├── icons/
+│   └── backgrounds/
+└── config.json
+```
+
+### Use Meaningful Names
+
+```
+# Good
+main-colors.uss
+match-day-theme.uss
+button-overrides.uss
+
+# Less clear
+styles1.uss
+colors2.uss
+new.uss
+```
+
+### Keep Related Files Together
+
+```
+graphics/
+├── icons/
+│   ├── mapping.json      # Keep mapping with icons
+│   ├── star.png
+│   └── badge.png
+```
+
+---
+
+**Next:** [Skin Configuration](/workspace/skin-config) - Learn all about config.json.

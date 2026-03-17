@@ -1,0 +1,231 @@
+---
+title: Your First Skin
+description: Create your first FM26 skin in 10 minutes with FM Skin Builder.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Your First Skin
+
+Let's create a working FM26 skin in about 10 minutes. By the end, you'll have changed some colors in Football Manager and understand the basic workflow.
+
+## What We'll Build
+
+A simple color scheme change:
+- Change the primary accent color to red
+- Change the secondary color to a custom blue
+- Build and test it in FM26
+
+## Existing Skin Templates You Can Use
+For now FM Skin Builder does not include built-in templates. You can create a blank project and add colors manually, or follow this tutorial with a skin listed below:
+- [Darkside Neutral Theme](https://sortitoutsi.net/content/75885/darkside-neutral-theme-blue-and-kaiserslautern-legend-edition) - A neutral theme with custom fonts, backgrounds and structured folders.
+
+## Step 1: Create a New Project
+
+1. Open FM Skin Builder
+2. Click **New Skin** (or File > New Skin)
+3. The New Skin Wizard opens
+
+<ScreenshotPlaceholder
+  id="new-skin-wizard-step1"
+  alt="New Skin Wizard - naming your skin"
+  caption="Enter a name and choose a location for your skin project"
+/>
+
+4. Enter a name for your skin (e.g., "My First Skin")
+5. Choose where to save the project folder
+6. Click **Next**
+
+### Template Selection
+
+The wizard offers template options:
+
+| Template | Description |
+|----------|-------------|
+| **Blank** | Empty project, start from scratch |
+| **Color Override** | Pre-configured for color changes |
+| **Full Theme** | Includes asset folders for icons/backgrounds |
+
+For this tutorial, select **Color Override** and click **Create**.
+
+<ScreenshotPlaceholder
+  id="new-skin-wizard-template"
+  alt="New Skin Wizard - template selection"
+  caption="Choose Color Override for a quick start with color changes"
+/>
+
+## Step 2: Open the CSS Editor
+
+After creating the project:
+
+1. The **Explorer** panel shows your project files
+2. Expand the `colours/` folder
+3. Double-click `base.uss` to open it
+
+<ScreenshotPlaceholder
+  id="explorer-base-uss"
+  alt="Explorer panel showing base.uss file"
+  caption="Click base.uss in the Explorer to open it in the editor"
+/>
+
+The CSS Editor opens with some template content:
+
+```css
+:root {
+  /* Primary colors */
+  --primary: #3498db;
+  --secondary: #2ecc71;
+  --accent: #e74c3c;
+}
+```
+
+## Step 3: Edit Colors
+
+Let's change the colors to create our custom theme.
+
+### Using Simple Mode (Recommended for Beginners)
+
+If you're in **Simple Mode** (check the status bar at the bottom):
+
+1. Click on any color value (like `#3498db`)
+2. A color picker appears
+3. Choose your desired color
+4. The value updates automatically
+
+<ScreenshotPlaceholder
+  id="css-editor-color-picker"
+  alt="CSS Editor with color picker open"
+  caption="Click a color value to open the visual color picker"
+/>
+
+### Using Expert Mode
+
+If you prefer typing directly:
+
+1. Click the mode toggle in the status bar to switch to **Expert Mode**
+2. Edit the values directly:
+
+```css
+:root {
+  /* Our custom colors */
+  --primary: #ff4444;      /* Red */
+  --secondary: #2196f3;    /* Blue */
+  --accent: #ff9800;       /* Orange */
+}
+```
+
+3. Save the file (Ctrl/Cmd + S)
+
+## Step 4: Build Your Skin
+
+Now let's compile the skin:
+
+1. Click the **Build** button in the toolbar (or press F5)
+2. Watch the build progress in the output panel
+3. Wait for "Build completed successfully"
+
+<ScreenshotPlaceholder
+  id="build-progress"
+  alt="Build progress panel"
+  caption="The build process shows progress and any warnings"
+/>
+
+**First build note:** The first build takes longer because it needs to scan FM's bundle files. Subsequent builds are much faster.
+
+### Build Output
+
+After building, your project folder contains:
+
+```
+my-first-skin/
+├── config.json
+├── colours/
+│   └── base.uss
+└── packages/           # ← Build output
+    └── [bundle files]
+```
+
+The `packages/` folder contains the modified bundle files ready for FM.
+
+## Step 5: Install in Football Manager
+
+Copy the built skin to FM's skins directory:
+
+### Automatic Installation
+
+1. In FM Skin Builder, click **Install to Game** (or Build > Install)
+2. The app copies files to the correct location
+3. Done!
+
+### Manual Installation
+
+Copy the `packages/` contents to:
+
+| Platform | Path |
+|----------|------|
+| Windows | `Documents\Sports Interactive\Football Manager 2026\skins\my-first-skin\` |
+| macOS | `~/Library/Application Support/Sports Interactive/Football Manager 2026/skins/my-first-skin/` |
+| Linux | `~/.local/share/Sports Interactive/Football Manager 2026/skins/my-first-skin/` |
+
+Create the `skins` folder if it doesn't exist.
+
+## Step 6: Activate in FM26
+
+1. Launch Football Manager 2026
+2. Go to **Preferences** (FM > Preferences on Mac)
+3. Find the **Interface** section
+4. In the **Skin** dropdown, select your skin
+5. Click **Confirm**
+
+<ScreenshotPlaceholder
+  id="fm-skin-selection"
+  alt="FM26 Preferences showing skin selection"
+  caption="Select your skin from the dropdown in FM Preferences"
+/>
+
+**Tip:** Check "Reload skin when confirming changes" for faster iteration.
+
+## Step 7: See Your Changes
+
+Your custom colors should now be visible throughout the FM interface!
+
+<ScreenshotPlaceholder
+  id="fm-with-custom-skin"
+  alt="FM26 with custom skin applied"
+  caption="Your custom colors are now visible in the game"
+/>
+
+## Iteration Workflow
+
+To make more changes:
+
+1. Edit your CSS in FM Skin Builder
+2. Save the file
+3. Click Build
+4. In FM, press the **Reload Skin** button (in Preferences) or restart FM
+5. See your changes
+
+**Pro tip:** Keep FM Skin Builder and FM both open. Use "Reload skin when confirming changes" in FM Preferences for the fastest workflow.
+
+## What's Next?
+
+Congratulations! You've created your first FM skin. Here are suggested next steps:
+
+- **[Interface Tour](/getting-started/interface-tour)** - Learn all the app features
+- **[CSS Editor](/editors/css-editor)** - Deep dive into color editing
+- **[CSS Variables Reference](/reference/css-variables)** - Discover more variables to customize
+
+## Quick Reference
+
+| Action | How |
+|--------|-----|
+| Create project | File > New Skin |
+| Edit colors | Open `.uss` file, modify values |
+| Build | Click Build or press F5 |
+| Install | Build > Install to Game |
+| Reload in FM | FM Preferences > Confirm |
+
+---
+
+**Next:** [Interface Tour](/getting-started/interface-tour) - Learn the full app interface.

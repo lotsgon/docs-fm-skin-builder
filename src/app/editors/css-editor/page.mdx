@@ -1,0 +1,355 @@
+---
+title: CSS Editor
+description: Edit colors and styles using FM Skin Builder's CSS/USS editor.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# CSS Editor
+
+The CSS Editor is your primary tool for changing colors and styles in Football Manager. It supports both CSS and USS (Unity Style Sheets) formats.
+
+## Opening the CSS Editor
+
+- Single-click any `.uss` or `.css` file in the Explorer
+- Create a new file with New File button or right click > New File, then save with `.uss` extension
+
+<ScreenshotPlaceholder
+  id="css-editor-overview"
+  alt="CSS Editor interface"
+  caption="The CSS Editor with a sample stylesheet open"
+/>
+
+## Simple Mode
+
+Simple Mode provides a visual interface for CSS editing.
+
+### Color Picker
+
+Click any color value to open the color picker:
+
+<ScreenshotPlaceholder
+  id="css-color-picker"
+  alt="Color picker in CSS Editor"
+  caption="Visual color picker with hex, RGB, and HSL support"
+/>
+
+**Color picker features:**
+- Visual color gradient
+- Hex input field
+- RGB sliders
+- Opacity/alpha slider
+
+### Variable/Class Browser
+
+The searchbar allows you to find CSS variables and classes in your file:
+
+<ScreenshotPlaceholder
+  id="css-variable-browser"
+  alt="Variable browser panel"
+  caption="Browse and edit variables from the sidebar"
+/>
+
+**Features:**
+- Search variables and classes
+
+## Expert Mode
+
+Expert Mode gives you a full code editor experience.
+
+<ScreenshotPlaceholder
+  id="css-expert-mode-full"
+  alt="CSS Editor in Expert Mode"
+  caption="Full syntax highlighting and code editing features"
+/>
+
+### Code Features
+
+| Feature | Shortcut |
+|---------|----------|
+| Toggle comment | Ctrl/Cmd + / |
+| Duplicate line | Alt/Option + Shift + Down |
+| Move line up/down | Alt/Option + Up/Down |
+| Format document | Shift + Alt/Option + F |
+
+### Auto-Fix Dialog
+
+Expert Mode includes an auto-fix feature that detects common CSS issues:
+
+<ScreenshotPlaceholder
+  id="css-autofix"
+  alt="CSS auto-fix dialog"
+  caption="The auto-fix dialog detects and helps fix common issues"
+/>
+
+**Detected issues:**
+- Duplicate selectors
+- Invalid property names
+- Nested selectors (not supported in USS)
+- Missing semicolons
+- Color format inconsistencies
+
+**To use:**
+1. Click "Auto-Fix" in the toolbar
+2. Review detected issues
+3. Click "Fix" on individual issues or "Fix All"
+
+## CSS Syntax for FM
+
+FM Skin Builder uses USS (Unity Style Sheets), which is similar to CSS with some differences.
+
+### Variables
+
+Define color variables in `:root`:
+
+```css
+:root {
+  --primary: #ff0000;
+  --secondary: #00ff00;
+  --background: #1a1a1a;
+}
+```
+
+**Variable naming:**
+- Start with `--` (two dashes)
+- Use lowercase with hyphens
+- Be descriptive: `--button-hover-bg` not `--bhbg`
+
+### Using Variables
+
+Reference variables with `var()`:
+
+```css
+.button {
+  background-color: var(--primary);
+  color: var(--text-color);
+}
+```
+
+### Selectors
+
+Target elements by class name:
+
+```css
+/* Single class */
+.green {
+  color: #00ff00;
+}
+
+/* Multiple classes (affects elements with ALL classes) NOT YET SUPPORTED */
+.button.primary {
+  background-color: #3498db;
+}
+```
+
+**Important USS limitations:**
+- No nested selectors (unlike SCSS)
+- No pseudo-classes like `:hover` (FM handles these differently)
+- No media queries
+
+### Color Formats
+
+FM supports these color formats:
+
+```css
+:root {
+  /* Hex - recommended */
+  --color1: #ff0000;
+
+  /* Hex with alpha */
+  --color2: #ff0000cc;
+
+  /* Short hex */
+  --color3: #f00;
+
+  /* RGB - not recommended, may have issues */
+  --color4: rgb(255, 0, 0);
+}
+```
+
+**Recommendation:** Use hex format (`#RRGGBB`) for best compatibility.
+
+### Comments
+
+```css
+/* This is a comment */
+
+:root {
+  --primary: #ff0000; /* Inline comment */
+}
+```
+
+## Workflow Examples
+
+### Changing Colors
+
+1. Open `styles/base.uss`
+2. Find the `:root` section
+3. Change `--primary` to your color:
+
+```css
+:root {
+  --primary: #e74c3c;  /* Changed from default */
+}
+```
+
+4. Save (Ctrl/Cmd + S)
+5. Build
+
+### Overriding a Specific Class
+
+1. Find the class name you want to change (see [Asset Catalogue](/catalogue))
+2. Add a selector:
+
+```css
+.green {
+  color: #2ecc71;  /* Custom green instead of FM default */
+}
+```
+
+### Creating Color Schemes
+
+Organize colors logically:
+
+```css
+:root {
+  /* Brand colors */
+  --brand-primary: #3498db;
+  --brand-secondary: #2ecc71;
+  --brand-accent: #e74c3c;
+
+  /* Background colors */
+  --bg-main: #1a1a1a;
+  --bg-panel: #2d2d2d;
+  --bg-hover: #3d3d3d;
+
+  /* Text colors */
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-muted: #666666;
+}
+```
+
+## Finding Variable Names
+
+How do you know which variables FM uses?
+
+### Asset Catalogue
+
+Browse the [Asset Catalogue](/catalogue) to discover:
+- CSS variable names
+- CSS class names
+- Current default values
+
+### Debug Mode
+
+Build with debug mode to see all USS files:
+
+1. Enable Debug Mode in Settings
+2. Build your skin
+3. Check `debug/original/` for FM's stylesheets
+
+### Trial and Error
+
+1. Add a variable you think exists:
+   ```css
+   --my-guess: #ff0000;
+   ```
+2. Build and test
+3. If the color appears somewhere, you found a match
+4. If not, try another name
+
+## Per-Stylesheet Targeting
+
+By default, CSS applies globally. To target specific stylesheets:
+
+1. Create `styles/mapping.json`:
+
+```json
+{
+  "match-colors.uss": "MatchColours",
+  "main-ui.uss": ["FMColours", "UIStyles"]
+}
+```
+
+2. Create separate CSS files:
+
+**styles/match-colors.uss:**
+```css
+:root {
+  --primary: #27ae60;  /* Green for match screens */
+}
+```
+
+**styles/main-ui.uss:**
+```css
+:root {
+  --primary: #3498db;  /* Blue for main UI */
+}
+```
+
+See [Mapping Editor](/editors/mapping-editor) for details.
+
+## Tips and Best Practices
+
+### Use Variables
+
+Define colors once, use everywhere:
+
+```css
+/* Good */
+:root {
+  --accent: #e74c3c;
+}
+.button { background-color: var(--accent); }
+.link { color: var(--accent); }
+
+/* Less maintainable */
+.button { background-color: #e74c3c; }
+.link { color: #e74c3c; }
+```
+
+### Comment Your Code
+
+```css
+:root {
+  /* Main theme colors */
+  --primary: #3498db;    /* Headers, buttons */
+  --secondary: #2ecc71;  /* Success states */
+  --danger: #e74c3c;     /* Errors, warnings */
+}
+```
+
+### Test Incrementally
+
+Don't change everything at once:
+
+1. Change one or two colors
+2. Build and test
+3. Verify they appear as expected
+4. Continue with more changes
+
+## Troubleshooting
+
+### "Color not changing"
+
+1. Check variable name matches exactly (case-sensitive)
+2. Ensure proper syntax (semicolons, colons)
+3. Rebuild after changes
+4. Reload skin in FM
+
+### "Syntax errors in Expert Mode"
+
+Look for:
+- Missing semicolons
+- Missing closing braces
+- Typos in property names
+
+### "Simple Mode won't open file"
+
+The file likely has syntax errors. Use Expert Mode to view and fix them.
+
+---
+
+**Next:** [UXML Editor](/editors/uxml-editor) - Learn to edit UI layouts.

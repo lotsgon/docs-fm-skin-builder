@@ -1,0 +1,280 @@
+---
+title: Full Build
+description: Build your skin for deployment to Football Manager.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Full Build
+
+Full Build generates the modified bundle files that you install in Football Manager. This is the final step before testing your skin in-game.
+
+## Running Full Build
+
+### Toolbar
+
+Click the **Build** button in the toolbar.
+
+<ScreenshotPlaceholder
+  id="build-button"
+  alt="Build button in toolbar"
+  caption="Click Build to start a full build"
+/>
+
+### Menu
+
+Build > Output > Build Skin
+
+## Build Process
+
+<ScreenshotPlaceholder
+  id="build-progress"
+  alt="Build progress panel"
+  caption="Build progress with status indicators"
+/>
+
+### Steps
+
+1. **Validation** - Check config and CSS syntax
+2. **Scanning** - Analyze FM bundles (uses cache after first run)
+3. **Matching** - Find selectors in stylesheets
+4. **Patching** - Apply your changes to bundles
+5. **Assets** - Process icons, backgrounds, fonts
+6. **Output** - Write modified bundles to `packages/`
+
+### Progress Indicators
+
+| Status | Meaning |
+|--------|---------|
+| Spinner | Step in progress |
+| ✓ Check | Step completed |
+| ⚠ Warning | Non-fatal issue |
+| ✗ Error | Build failed |
+
+## Build Output
+
+### packages/ Folder
+
+After successful build:
+
+```
+my-skin/
+└── packages/
+    └── [modified .bundle files]
+```
+
+**Contents:**
+- Modified Unity bundle files
+
+<ScreenshotPlaceholder
+  id="packages-folder"
+  alt="Packages folder contents"
+  caption="Build output in the packages folder"
+/>
+
+### Changes Panel
+
+The Changes panel shows what was modified:
+
+<ScreenshotPlaceholder
+  id="changes-panel-build"
+  alt="Changes panel after build"
+  caption="View all modifications in the Changes panel"
+/>
+
+## Build Log
+
+The Output panel shows detailed information:
+
+```
+[Build] Starting build...
+[Build] Validating config.json ✓
+[Build] Loading CSS files...
+  - colours/base.uss (24 variables, 3 selectors)
+[Build] Scanning bundles...
+  - Using cache (last scan: 2 hours ago)
+[Build] Matching selectors...
+  - :root (--primary) → 3 stylesheets
+  - .green → 1 stylesheet
+[Build] Patching bundles...
+  - FMColours.bundle ✓
+  - UIStyles.bundle ✓
+[Build] Processing assets...
+  - icons: 2 replacements
+[Build] Writing output to packages/
+[Build] Build completed successfully!
+```
+
+## Build Performance
+
+### First Build
+
+The first build is slower because it scans all FM bundles and creates a cache:
+
+```
+[Build] Scanning bundles...
+  - Scanning 300+ bundle files
+  - This may take a moment...
+[Build] Scan complete. Cache created.
+```
+
+**Expected time:** 30 seconds to 2 minutes
+
+### Subsequent Builds
+
+Later builds use cached scan data:
+
+```
+[Build] Using cache (last scan: 1 hour ago)
+```
+
+**Expected time:** 5-15 seconds
+
+### Factors Affecting Speed
+
+| Factor | Impact |
+|--------|--------|
+| First build vs cached | Major |
+| Number of CSS files | Minor |
+| Asset processing | Moderate |
+| Debug mode enabled | Moderate |
+| System speed | Moderate |
+
+## Build Options
+
+### Debug Mode
+
+Enable in Settings to get additional output:
+
+<ScreenshotPlaceholder
+  id="debug-mode-setting"
+  alt="Debug mode toggle"
+  caption="Enable debug mode for detailed output"
+/>
+
+With debug mode:
+- Original stylesheets extracted to `debug/original/`
+- Patched stylesheets to `debug/patched/`
+- Asset information exported
+- Detailed logs
+
+### Clean Build
+
+Force a fresh build (ignores cache):
+
+1. Clear cache in Settings
+2. Run Build
+
+Use when:
+- FM updated to new version
+- Bundles may have changed
+- Troubleshooting cache issues
+
+## Handling Warnings
+
+Warnings don't stop the build but indicate potential issues:
+
+### "Selector matched multiple stylesheets"
+
+```
+⚠ Warning: Selector '.green' matched stylesheets in multiple bundles
+```
+
+**Meaning:** Your change applies to multiple places.
+
+**Action:** Expected if you want global changes. Use mapping for targeting.
+
+### "Asset not found"
+
+```
+⚠ Warning: Asset 'missing_icon' referenced but not found
+```
+
+**Meaning:** Mapping references non-existent asset.
+
+**Action:** Check mapping.json and file names.
+
+### "Variable not matched"
+
+```
+⚠ Warning: Variable '--custom-var' not found in any stylesheet
+```
+
+**Meaning:** CSS variable doesn't exist in FM.
+
+**Action:** Check variable name or use Asset Catalogue to find correct names.
+
+## Handling Errors
+
+Errors stop the build:
+
+### "Invalid config.json"
+
+```
+✗ Error: Invalid JSON syntax in config.json at line 5
+```
+
+**Action:** Fix JSON syntax errors in config file.
+
+### "CSS parse error"
+
+```
+✗ Error: CSS parse error in base.uss at line 12: Unexpected token
+```
+
+**Action:** Fix CSS syntax (missing semicolons, braces, etc.).
+
+### "Cannot write output"
+
+```
+✗ Error: Cannot write to packages/ - permission denied
+```
+
+**Action:** Check folder permissions or close other programs using those files.
+
+## After Building
+
+### Verify Output
+
+Check `packages/` folder:
+- Files should be present
+- Reasonable file sizes
+- Recent timestamps
+
+### Next Steps
+
+1. **[Apply to Game](/building/applying-to-game)** - Install in FM
+2. **Test in FM** - Verify changes work
+3. **Iterate** - Make adjustments as needed
+
+## Tips
+
+### Build Often
+
+Small changes, frequent builds:
+- Easier to identify what broke
+- Faster iteration
+- Less frustration
+
+### Preview First
+
+Use [Preview Build](/building/preview-build) to catch errors before full build.
+
+### Check the Summary and Changes Output
+
+Always read summary and changes output:
+- Errors and warnings summarised
+- Summary match counts show what's changing by type
+- Detailed overview of all changes in a table format
+
+### Check the Logs
+
+Always read full build log output for advanced troubleshooting:
+- Warnings can show additional logs
+- Errors need immediate attention and you can follow the flow
+- This can pinpoint issues quickly with specific files processed before errors or warnings show
+
+---
+
+**Next:** [Applying to Game](/building/applying-to-game) - Install your skin in FM.

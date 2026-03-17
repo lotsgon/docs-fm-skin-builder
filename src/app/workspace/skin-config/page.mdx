@@ -1,0 +1,416 @@
+---
+title: Skin Configuration
+description: Configure your skin with config.json - the central configuration file.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Skin Configuration
+
+Every FM Skin Builder project requires a `config.json` file. This file defines your skin's metadata and build settings.
+
+## Quick Start
+
+Minimal config.json:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin"
+}
+```
+
+That's all you need to start building!
+
+## Complete Schema
+
+Here's a config.json with all available fields:
+
+```json
+{
+  "schema_version": 1,
+  "name": "Dark Theme Pro",
+  "author": "Your Name",
+  "version": "1.0.0",
+  "description": "A sleek dark theme with custom icons",
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+## Field Reference
+
+### schema_version (Required)
+
+```json
+{
+  "schema_version": 1
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | Integer |
+| Required | Yes |
+| Valid values | `1` |
+
+The schema version tells FM Skin Builder which config format you're using. This enables future compatibility when new features are added.
+
+**Important:** Must be exactly `1` (a number, not a string).
+
+```json
+// Correct
+"schema_version": 1
+
+// Wrong
+"schema_version": "1"    // String, not number
+```
+
+### name
+
+```json
+{
+  "name": "Dark Theme Pro"
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | String |
+| Required | No |
+| Default | Folder name |
+
+Your skin's display name. Used in:
+- FM Skin Builder's title bar
+- Build logs
+
+**Tips:**
+- Keep it concise but descriptive
+- Avoid version numbers in the name (use `version` field instead)
+
+### author
+
+```json
+{
+  "author": "John Doe"
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | String |
+| Required | No |
+| Default | None |
+
+Your name or username. For attribution and documentation purposes.
+
+### version
+
+```json
+{
+  "version": "1.0.0"
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | String |
+| Required | No |
+| Default | None |
+
+Your skin's version number. We recommend semantic versioning:
+
+| Version | Meaning |
+|---------|---------|
+| MAJOR (1.x.x) | Breaking changes, major redesign |
+| MINOR (x.1.x) | New features, significant additions |
+| PATCH (x.x.1) | Bug fixes, small tweaks |
+
+**Examples:**
+- `1.0.0` → Initial release
+- `1.0.1` → Fixed a color issue
+- `1.1.0` → Added new icon set
+- `2.0.0` → Complete redesign
+
+### description
+
+```json
+{
+  "description": "A sleek dark theme with blue accents and custom icons for FM26"
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | String |
+| Required | No |
+| Default | None |
+
+A description of your skin. Keep it brief but informative.
+
+### includes
+
+```json
+{
+  "includes": [
+    "styles",
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+| Property | Value |
+|----------|-------|
+| Type | Array of strings |
+| Required | No |
+| Default | `[]` |
+
+Specifies which asset folders to process during build. Each entry is a path relative to your project root.
+
+**Valid paths:**
+- `"styles"` - Process stylesheets
+- `"graphics/icons"` - Process icon replacements
+- `"graphics/backgrounds"` - Process background replacements
+- Custom paths to asset folders you create
+
+**Important:**
+- If you have an `graphics/` folder but don't include it here, those assets are ignored
+- Each included folder should contain a `mapping.json` file
+- Paths are case-sensitive on macOS/Linux
+
+## Editing config.json
+
+### Using the Config Editor (Simple Mode)
+
+FM Skin Builder provides a visual editor:
+
+1. Single-click `config.json` in Explorer
+2. The Config Editor opens with a form interface if you are in Simple Mode
+3. Edit fields using input boxes and checkboxes
+4. Save your changes (Ctrl/Cmd + S)
+
+<ScreenshotPlaceholder
+  id="config-editor-simple"
+  alt="Config Editor in Simple Mode"
+  caption="The visual Config Editor makes editing easy"
+/>
+
+### Using Expert Mode
+
+For direct JSON editing:
+
+1. Toggle to Expert Mode
+2. Edit the raw JSON
+3. Save (Ctrl/Cmd + S)
+
+<ScreenshotPlaceholder
+  id="config-editor-expert"
+  alt="Config Editor in Expert Mode"
+  caption="Expert Mode shows raw JSON with syntax highlighting"
+/>
+
+### Validation
+
+The editor validates your config in real-time:
+
+| Check | Error Message |
+|-------|---------------|
+| Valid JSON | "Unexpected token..." |
+| schema_version present | "schema_version is required" |
+| includes paths exist | "Include path not found: ..." |
+
+<ScreenshotPlaceholder
+  id="config-validation"
+  alt="Config validation error"
+  caption="Validation errors appear inline"
+/>
+
+## Common Configurations
+
+### Color-Only Skin
+
+No assets, just color changes:
+
+```json
+{
+  "schema_version": 1,
+  "name": "Blue Accent",
+  "author": "Your Name",
+  "version": "1.0.0",
+  "includes": ["styles"]
+}
+```
+
+Folder structure:
+```
+blue-accent/
+├── config.json
+└── styles/
+    ├── mapping.json    # Per-stylesheet targeting
+    └── base.uss        # Global colors
+```
+
+### Full Theme with Assets
+
+Complete skin with icons and backgrounds:
+
+```json
+{
+  "schema_version": 1,
+  "name": "Complete Dark Theme",
+  "author": "Your Name",
+  "version": "1.0.0",
+  "description": "Dark theme with custom icons and backgrounds",
+  "includes": [
+    "styles",
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+Folder structure:
+```
+complete-dark/
+├── config.json
+├── styles/
+│   └── base.uss
+└── graphics/
+    ├── icons/
+    │   ├── star.png
+    │   └── mapping.json
+    └── backgrounds/
+        ├── main_bg.jpg
+        └── mapping.json
+```
+
+### Multi-File Color Configuration
+
+Organized CSS across multiple files:
+
+```json
+{
+  "schema_version": 1,
+  "name": "Organized Theme",
+  "version": "2.0.0",
+  "includes": ["styles"]
+}
+```
+
+Folder structure:
+```
+organized/
+├── config.json
+└── styles/
+    ├── base.uss           # Global colors
+    ├── FMColours.uss      # Main UI colors
+    ├── MatchColours.uss   # Match screen colors
+    └── mapping.json       # Per-stylesheet targeting
+```
+
+## Troubleshooting
+
+### "Invalid JSON syntax"
+
+Common JSON mistakes:
+
+```json
+// Missing comma
+{
+  "schema_version": 1
+  "name": "My Skin"    // ← needs comma above
+}
+
+// Trailing comma
+{
+  "schema_version": 1,
+  "name": "My Skin",   // ← remove this comma
+}
+
+// Missing quotes
+{
+  schema_version: 1    // ← keys need quotes
+}
+```
+
+**Solution:** Use a JSON validator like [jsonlint.com](https://jsonlint.com/)
+
+### "schema_version must be 1"
+
+```json
+// Wrong
+"schema_version": "1"   // String
+
+// Correct
+"schema_version": 1     // Number, value 1
+```
+
+### "Include path not found"
+
+The path in `includes` doesn't exist:
+
+```json
+{
+  "includes": ["graphics/iconz"]  // Typo - should be "icons"
+}
+```
+
+**Solution:** Create the folder or fix the path.
+
+### Changes not taking effect
+
+1. Make sure you saved config.json
+2. Rebuild your skin (changes require rebuild)
+3. Check the Output panel for errors
+
+## Best Practices
+
+### Keep It Simple
+
+Only add fields you actually need:
+
+```json
+// Good - minimal but complete
+{
+  "schema_version": 1,
+  "name": "My Theme",
+  "version": "1.0.0"
+}
+```
+
+### Use Meaningful Descriptions
+
+```json
+// Good
+"description": "A dark theme optimized for night gaming with reduced eye strain"
+
+// Less useful
+"description": "My skin"
+```
+
+### Version Consistently
+
+Increment version when you release updates:
+
+```json
+// v1.0.0 - Initial release
+// v1.0.1 - Fixed button colors
+// v1.1.0 - Added new icons
+```
+
+### Don't Include Unused Paths
+
+```json
+// If you don't have backgrounds, don't include it
+{
+  "includes": ["graphics/icons"]  // Only what you use
+}
+```
+
+---
+
+**Next:** [Editors](/editors) - Learn about the different editors for CSS, UXML, and more.

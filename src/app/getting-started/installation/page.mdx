@@ -1,0 +1,162 @@
+---
+title: Installation
+description: Download and install FM Skin Builder on Windows, macOS, or Linux.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Installation
+
+FM Skin Builder is available for Windows, macOS, and Linux. This guide covers downloading, installing, and launching the app for the first time.
+
+## System Requirements
+
+| Platform | Minimum Version |
+|----------|-----------------|
+| Windows | Windows 10 (64-bit) |
+| macOS | macOS 11 Big Sur |
+| Linux | Ubuntu 20.04 / equivalent |
+
+**Additional requirements:**
+- 500 MB free disk space
+- Football Manager 26 installed (for building and testing skins)
+
+## Download
+
+Visit the [Downloads page](/downloads) to get the latest version for your platform.
+
+<ScreenshotPlaceholder
+  id="downloads-page"
+  alt="Downloads page showing platform options"
+  caption="Select your platform to download the appropriate installer"
+/>
+
+## Installation by Platform
+
+### Windows
+
+1. Download the `.exe` installer from the Downloads page
+2. Double-click the installer file
+3. If you see "Windows protected your PC":
+   - Click **More info**
+   - Click **Run anyway**
+4. Follow the installation wizard
+5. Launch FM Skin Builder from the Start menu or desktop shortcut
+
+{/* <ScreenshotPlaceholder
+  id="windows-smartscreen"
+  alt="Windows SmartScreen warning dialog"
+  caption="Click 'More info' then 'Run anyway' - the app is safe to use"
+/> */}
+
+### macOS
+
+1. Download the `.dmg` file from the Downloads page
+2. Open the DMG file
+3. Drag FM Skin Builder to your Applications folder
+4. First launch:
+   - Right-click the app and select **Open**
+   - Click **Open** in the dialog that appears
+   - (This is only needed the first time)
+
+{/* <ScreenshotPlaceholder
+  id="macos-gatekeeper"
+  alt="macOS Gatekeeper dialog"
+  caption="Right-click and select Open to bypass Gatekeeper on first launch"
+/> */}
+
+**Alternative method:**
+1. Go to **System Preferences > Security & Privacy**
+2. Click the lock icon to make changes
+3. Click **Open Anyway** next to the FM Skin Builder message
+
+### Linux
+
+1. Download the `.AppImage` file from the Downloads page
+2. Make it executable:
+   ```bash
+   chmod +x FM-Skin-Builder-*.AppImage
+   ```
+3. Run the AppImage:
+   ```bash
+   ./FM-Skin-Builder-*.AppImage
+   ```
+
+**Optional:** Move to `/usr/local/bin/` for system-wide access:
+```bash
+sudo mv FM-Skin-Builder-*.AppImage /usr/local/bin/fm-skin-builder
+```
+
+## First Launch
+
+When you first open FM Skin Builder:
+
+1. The app will detect your Football Manager installation automatically
+2. If FM26 isn't found, you'll need to set the path to bundles manually (see below)
+3. You'll see the welcome screen with options to:
+   - Create a new skin project
+   - Open an existing skin folder
+   - Browse recent projects
+
+<ScreenshotPlaceholder
+  id="welcome-screen"
+  alt="FM Skin Builder welcome screen"
+  caption="The welcome screen appears when no project is open"
+/>
+
+## Game Path Configuration
+
+FM Skin Builder needs to know where Football Manager is installed to access its bundle files.
+
+**Auto-detection** (the magic wand button) works for most Steam and Epic Games installations. 
+
+If the app doesn't find your FM installation:
+
+1. Click **Settings** in the Activity Bar
+2. Navigate to the **Paths** section
+3. Click **Browse** next to "FM Installation Path"
+4. Navigate to your FM26 installation folder
+
+**Common FM26 locations:**
+
+| Platform | Path |
+|----------|------|
+| Windows (Steam) | `C:\Program Files (x86)\Steam\steamapps\common\Football Manager 26` |
+| Windows (Epic) | `C:\Program Files\Epic Games\Football Manager 26` |
+| Windows (Game Pass) | `C:\XboxGames\Football Manager 26\Content\fm_Data\StreamingAssets\aa\StandaloneWindows64\` |
+| macOS (Steam) | `~/Library/Application Support/Steam/steamapps/common/Football Manager 26` |
+| Linux (Steam) | `~/.steam/steam/steamapps/common/Football Manager 26` |
+
+## Troubleshooting Installation
+
+### "App won't open" (Windows)
+
+This is usually the SmartScreen warning. See the Windows installation steps above.
+
+### "Cannot be opened because the developer cannot be verified" (macOS)
+
+**Method 1:**
+Open terminal and run:
+```bash 
+xattr -cr "/Applications/FM Skin Builder.app"
+```
+
+**Method 2:**
+Use the right-click > Open method, or allow the app in Security & Privacy settings.
+
+### App crashes on launch
+
+1. Ensure your OS version meets the minimum requirements
+2. Try downloading the installer again (corrupted download)
+3. Run as administrator (Windows) or check permissions (macOS/Linux)
+
+### Game not detected
+
+1. Make sure FM26 is installed
+2. Manually set the path in Settings > Paths
+3. Look for a folder containing `.bundle` files in the `data/` directory
+
+---
+
+**Next:** [Your First Skin](/getting-started/first-skin) - Create a working skin in 10 minutes.

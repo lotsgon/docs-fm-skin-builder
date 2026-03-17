@@ -1,0 +1,262 @@
+---
+title: Config Editor
+description: Edit your skin's config.json using the visual or JSON editor.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Config Editor
+
+The Config Editor provides a specialized interface for editing your skin's `config.json` file. It works in both Simple Mode (visual form) and Expert Mode (raw JSON).
+
+## Opening the Config Editor
+
+- Single-click `config.json` in the Explorer
+
+## Simple Mode
+
+Simple Mode displays config.json as an editable form.
+
+<ScreenshotPlaceholder
+  id="config-simple-mode"
+  alt="Config Editor form interface"
+  caption="Visual form for editing configuration"
+/>
+
+### Form Fields
+
+| Field | Input Type | Description |
+|-------|------------|-------------|
+| Name | Text input | Your skin's display name |
+| Description | Text area | Skin description |
+| Includes | Folder picker | Asset folders to process |
+
+### Editing Basic Fields
+
+1. Click on any text field
+2. Type your value
+3. Save your changes (Ctrl/Cmd + S)
+
+<ScreenshotPlaceholder
+  id="config-editing-fields"
+  alt="Editing config fields"
+  caption="Edit fields directly in the form"
+/>
+
+### Managing Includes
+
+The Includes section shows which asset folders will be processed:
+
+<ScreenshotPlaceholder
+  id="config-includes"
+  alt="Includes management UI"
+  caption="Add and remove include paths"
+/>
+
+**To add an include:**
+1. Select folder from picker (shows your project structure)
+2. Or check Include All Folders
+
+**To remove an include:**
+1. Find the include in the list
+2. Check the box off next to it
+
+**Common include paths:**
+- `graphics/icons`
+- `graphics/backgrounds`
+- `fonts`
+- `styles`
+
+## Expert Mode
+
+Expert Mode gives you direct JSON editing.
+
+<ScreenshotPlaceholder
+  id="config-expert-mode"
+  alt="Config Editor in Expert Mode"
+  caption="Raw JSON editing with syntax highlighting"
+/>
+
+### Code Features
+
+| Feature | Shortcut |
+|---------|----------|
+| Format document | Shift + Alt/Option + F |
+| Toggle comment | Not supported in JSON |
+| Duplicate line | Alt/Option + Shift + Down |
+| Find | Ctrl/Cmd + F |
+
+### Direct JSON Editing
+
+Edit the JSON directly:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Custom Skin",
+  "author": "Your Name",
+  "version": "1.0.0",
+  "description": "A dark theme with blue accents",
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+### Validation in Expert Mode
+
+Expert Mode validates JSON syntax and schema:
+
+<ScreenshotPlaceholder
+  id="config-validation-expert"
+  alt="JSON validation errors"
+  caption="Syntax and schema errors appear inline"
+/>
+
+**Common errors:**
+- Syntax errors (missing commas, quotes)
+- Invalid field types
+
+## Config Schema
+
+### Complete Example
+
+```json
+{
+  "schema_version": 1,
+  "name": "Dark Theme Pro",
+  "author": "John Doe",
+  "version": "2.1.0",
+  "description": "A sleek dark theme optimized for night gaming",
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+## Common Tasks
+
+### Setting Up Asset Includes
+
+When you add icons or backgrounds:
+
+**Simple Mode:**
+1. Click "Add Include"
+2. Navigate to `graphics/icons`
+3. Repeat for `graphics/backgrounds`
+
+**Expert Mode:**
+```json
+{
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+### Bumping Version
+
+When releasing updates:
+
+**Expert Mode:**
+```json
+"version": "1.0.1"
+```
+
+## Troubleshooting
+
+### "Invalid JSON syntax"
+
+Common mistakes in Expert Mode:
+
+```json
+// Missing comma
+{
+  "schema_version": 1
+  "name": "My Skin"  // ← Add comma above
+}
+
+// Trailing comma
+{
+  "includes": [
+    "graphics/icons",  // ← Remove trailing comma if last item
+  ]
+}
+
+// Wrong quotes
+{
+  'name': 'My Skin'  // ← Use double quotes
+}
+```
+
+### "schema_version must be 1"
+
+Ensure it's a number, not a string:
+
+```json
+// Wrong
+"schema_version": "2"
+
+// Correct
+"schema_version": 1
+```
+
+### "Include path not found"
+
+The folder doesn't exist:
+
+1. Create the folder in your project
+2. Or remove it from includes
+
+### Changes not saving
+
+- Make sure you press Save (Ctrl/Cmd + S)
+- Check for validation errors blocking save
+- Try switching modes to force a refresh
+
+## Best Practices
+
+### Keep It Simple
+
+Only include fields you actually use:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Theme",
+  "version": "1.0.0",
+  "includes": ["graphics/icons"]
+}
+```
+
+### Use Meaningful Descriptions
+
+```json
+"description": "Dark theme with blue accents, optimized for reduced eye strain during night gaming sessions"
+```
+
+### Version Consistently
+
+Update version when you make changes:
+
+```json
+// Initial release
+"version": "1.0.0"
+
+// Bug fix
+"version": "1.0.1"
+
+// New feature (added icons)
+"version": "1.1.0"
+
+// Major redesign
+"version": "2.0.0"
+```
+
+---
+
+**Next:** [Mapping Editor](/editors/mapping-editor) - Configure per-stylesheet targeting.

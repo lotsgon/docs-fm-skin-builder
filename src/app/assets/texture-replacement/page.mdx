@@ -1,0 +1,307 @@
+---
+title: Texture Replacement
+description: Replace icons and backgrounds in Football Manager.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Texture Replacement
+
+Texture replacement lets you swap out FM's icons, backgrounds, and UI images with your own.
+
+## Supported Formats
+
+| Format | Best For | Notes |
+|--------|----------|-------|
+| **PNG** | Icons, UI elements | Supports transparency |
+| **JPG** | Backgrounds | Smaller file size |
+| **SVG** | Scalable icons | Vector format |
+
+## Setting Up
+
+### Folder Structure
+
+```
+my-skin/
+├── config.json
+└── graphics/
+    ├── icons/
+    │   ├── my-star.png
+    │   ├── my-badge.svg
+    │   └── mapping.json
+    └── backgrounds/
+        ├── main-bg.jpg
+        └── mapping.json
+```
+
+### Adding to Config
+
+Include your asset folders in `config.json`:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin",
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+**Important:** Without this, your assets won't be processed!
+
+## Mapping Files
+
+Each asset folder needs a `mapping.json` that tells FM Skin Builder which textures to replace.
+
+### Basic Syntax
+
+```json
+{
+  "your_file.png": "game_texture_name"
+}
+```
+
+- **Left side (value)**: Your replacement file name (without extension)
+- **Right side (key)**: The original texture name in FM's bundles
+
+### Example
+
+```json
+{
+  "my-star.png": "star_rating",
+  "my-badge.svg": "club_badge_small"
+}
+```
+
+This replaces:
+- `star_rating` with `graphics/icons/my-star.png`
+- `club_badge_small` with `graphics/icons/my-badge.svg`
+
+## Wildcard Patterns
+
+Use `*` to match multiple textures:
+
+```json
+{
+  "my-star.png": "star_*",
+  "my-badge.svg": "badge_*"
+}
+```
+
+This replaces:
+- `star_gold`, `star_silver`, `star_rating` → all become `my-star.png`
+- `badge_small`, `badge_large`, `badge_club` → all become `my-badge.svg`
+
+**Why wildcards?**
+
+FM often has multiple variants of the same icon (different sizes, states). Wildcards let you replace all variants at once.
+
+## Finding Texture Names
+
+### Asset Catalogue
+
+Browse the [Asset Catalogue](/catalogue) to discover textures:
+
+<ScreenshotPlaceholder
+  id="catalogue-textures"
+  alt="Asset Catalogue showing textures"
+  caption="Browse textures in the Asset Catalogue"
+/>
+
+- Search by name or visual appearance
+- See dimensions and bundle location
+- Copy names for your mapping
+
+### Trial and Error
+
+Use broad wildcards to discover names:
+
+```json
+{
+  "test.png": "*_icon",
+  "test.svg": "icon_*"
+}
+```
+
+Build and check logs for what matched.
+
+## Icon Replacement
+
+### Creating Icon Files
+
+**Recommended specifications:**
+
+| Size | Use Case |
+|------|----------|
+| 16x16 | Small toolbar icons |
+| 32x32 | Standard icons |
+| 64x64 | Large icons |
+| 128x128 | High-DPI displays |
+
+**Tips:**
+- Match the original icon's dimensions when possible
+- Use transparency for icons (PNG)
+- Keep file sizes reasonable
+
+### Example: Custom Star Icon
+
+1. Create `graphics/icons/custom-star.png` (32x32, PNG with transparency)
+
+2. Create `graphics/icons/mapping.json`:
+```json
+{
+  "custom-star.png": "star_*"
+}
+```
+
+3. Ensure config includes the folder:
+```json
+{
+  "includes": ["graphics/icons"]
+}
+```
+
+4. Build and test
+
+<ScreenshotPlaceholder
+  id="icon-before-after"
+  alt="Before and after icon replacement"
+  caption="Custom star (left) replaces original star (right)"
+/>
+
+## Background Replacement
+
+### Creating Background Files
+
+**Recommended specifications:**
+
+- **Resolution**: 1920x1080 or higher
+- **Format**: JPG (for smaller size) or PNG (for quality)
+- **Aspect ratio**: Match FM's display areas
+
+### Example: Custom Background
+
+1. Create `graphics/backgrounds/my-bg.jpg`
+
+2. Create `graphics/backgrounds/mapping.json`:
+```json
+{
+  "my-bg.jpg": "main_background",
+  "my-bg.jpg": "menu_background_*"
+}
+```
+
+3. Include in config:
+```json
+{
+  "includes": ["graphics/backgrounds"]
+}
+```
+
+4. Build and test
+
+## Vector Icon Replacements
+
+Some graphics in game use special svg files instead of a sprite need and need to be replaced differently. FM Skin Builder supports vector shape mapping for these icons.
+
+```json
+{
+  "min-half-youth.svg": {
+      "type": "vector",
+      "targets": ["ability=minimum, potential level=half, youth=true_*"]
+  },
+}
+```
+
+## Mixing File and Vector Mappings
+
+You can combine both in one mapping.json:
+
+```json
+{
+  "custom-star.png": "original-star",
+  "min-half-youth.svg": {
+      "type": "vector",
+      "targets": ["ability=minimum, potential level=half, youth=true_*"]
+  },
+  "custom-logo": "original-logo"
+}
+```
+
+## Best Practices
+
+### Match Dimensions
+
+Replace icons with same-sized replacements:
+- 32x32 icon → 32x32 replacement
+- Mismatched sizes may display incorrectly
+
+### Use Appropriate Formats
+
+| Content | Format |
+|---------|--------|
+| Icons with transparency | PNG |
+| Backgrounds, photos | JPG |
+| Scalable icons | SVG |
+
+### Test Thoroughly
+
+1. Replace one icon first
+2. Build and verify it appears
+3. Then replace more
+
+### Organize Files Logically
+
+```
+graphics/
+├── icons/
+│   ├── ui/
+│   │   ├── button-icons.png
+│   │   └── mapping.json
+│   └── ratings/
+│       ├── stars.png
+│       └── mapping.json
+└── backgrounds/
+    ├── main-bg.jpg
+    └── mapping.json
+```
+
+*Note: Nested folders work, but each needs its own mapping.json.*
+
+## Troubleshooting
+
+### "Icon not appearing"
+
+1. Check mapping.json syntax
+2. Verify file exists and path is correct
+3. Ensure folder is in config `includes`
+4. Check file name matches mapping (case-sensitive)
+5. Rebuild and restart FM
+
+### "Wrong icon size"
+
+Your replacement doesn't match original dimensions:
+- Find original size (use Asset Catalogue)
+- Resize your image to match
+- Rebuild
+
+### "Mapping not working"
+
+1. JSON syntax valid?
+2. File name without extension?
+3. Original name correct?
+4. Wildcard pattern matching?
+
+### "Build succeeds but no change"
+
+1. Verify correct texture name
+2. Check mapping is in right folder
+3. Ensure folder is in `includes`
+4. Restart FM (not just reload skin)
+
+---
+
+**Next:** [Sprite Atlases](/graphics/sprite-atlases) - Work with sprite sheets.

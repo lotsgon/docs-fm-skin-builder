@@ -1,0 +1,57 @@
+---
+title: Editors
+description: Learn about FM Skin Builder's specialized editors for CSS, UXML, configs, and more.
+searchable: true
+asIndexPage: true
+---
+
+import { Cards } from 'nextra/components'
+import { ToggleLeft, Code, FileCode, FileJson, Link, Table, LayoutGrid, Paintbrush } from 'lucide-react'
+
+# Editors
+
+FM Skin Builder includes specialized editors for different file types. Each editor is optimized for its specific purpose, with both Simple and Expert modes available.
+
+<Cards>
+  <Cards.Card icon={<ToggleLeft />} title="Simple vs Expert Mode" href="/editors/editor-modes" />
+  <Cards.Card icon={<Code />} title="CSS Editor" href="/editors/css-editor" />
+  <Cards.Card icon={<FileCode />} title="UXML Editor" href="/editors/uxml-editor" />
+  <Cards.Card icon={<FileJson />} title="Config Editor" href="/editors/config-editor" />
+  <Cards.Card icon={<Link />} title="Mapping Editor" href="/editors/mapping-editor" />
+  <Cards.Card icon={<Table />} title="Table View Editor" href="/editors/table-view-editor" />
+  <Cards.Card icon={<LayoutGrid />} title="Tile Layout Editor" href="/editors/tile-layout-editor" />
+</Cards>
+
+## Simple vs Expert Mode
+
+Before diving into specific editors, understand the two editing modes:
+
+| Mode | Description | Best For |
+|------|-------------|----------|
+| **Simple** | Visual interfaces, forms, drag-and-drop | Beginners, quick edits |
+| **Expert** | Raw code editing with syntax highlighting | Advanced users, full control |
+
+Toggle between modes using the status bar button or `Ctrl/Cmd + Shift + M`.
+
+Learn more: **[Simple vs Expert Mode](/editors/editor-modes)**
+
+## Editor Overview
+
+| Editor | File Types | Simple Mode | Expert Mode |
+|--------|------------|-------------|-------------|
+| CSS Editor | `.uss`, `.css` | Color pickers, variable browser | Syntax highlighting, auto-fix |
+| UXML Editor | `.uxml` | Element tree, drag-and-drop | Raw XML editing |
+| Config Editor | `config.json` | Visual form | JSON editing |
+| Mapping Editor | `mapping.json` | File-to-stylesheet UI | JSON editing |
+| Table View Editor | Table configs | Column configuration | JSON editing |
+| Tile Layout Editor | Layout configs | Visual grid preview | JSON editing |
+| Inline Style Editor | Any element | Property panel | Limited |
+
+## Common Editor Features
+
+All editors share these capabilities:
+
+- **Tabs** - Multiple files open simultaneously, drag to reorder
+- **Undo/Redo** - Unlimited history (`Ctrl/Cmd + Z` / `Ctrl/Cmd + Shift + Z`)
+- **Find and Replace** - `Ctrl/Cmd + F` to find, `Ctrl/Cmd + H` to replace
+- **Split View** - Right-click tab → Split Right/Down

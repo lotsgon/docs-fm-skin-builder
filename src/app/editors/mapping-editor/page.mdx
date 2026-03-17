@@ -1,0 +1,308 @@
+---
+title: Mapping Editor
+description: Configure per-stylesheet targeting with mapping.json files.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Mapping Editor
+
+The Mapping Editor helps you configure `mapping.json` files, which control how your CSS files target specific FM stylesheets.
+
+## What is Mapping?
+
+By default, your CSS changes apply to **no** stylesheets across all bundles. Mapping lets you be more specific:
+
+- Apply different colors to different parts of FM's UI
+- Target only certain stylesheets
+- Avoid unintended changes
+
+**Example:** You want blue colors in the main UI but green colors on match screens. Mapping makes this possible.
+
+## Opening the Mapping Editor
+
+- Double-click `mapping.json` in the Explorer
+- Create new: File > New File, save as `mapping.json` in your `styles/` folder
+
+<ScreenshotPlaceholder
+  id="mapping-editor-overview"
+  alt="Mapping Editor interface"
+  caption="The Mapping Editor showing CSS-to-stylesheet mappings"
+/>
+
+## Simple Mode
+
+Simple Mode provides a visual interface for managing mappings.
+
+<ScreenshotPlaceholder
+  id="mapping-simple-mode"
+  alt="Mapping Editor Simple Mode"
+  caption="Visual mapping configuration"
+/>
+
+### Understanding the Interface
+
+The editor shows:
+- **Your CSS files**: Listed on the left
+- **Target stylesheets**: Listed on the right
+- **Connections**: Lines showing which CSS targets which stylesheets
+
+### Creating a Mapping
+
+1. Find your CSS file in the left column
+2. Click "Add Target"
+3. Select or type the stylesheet name
+4. The mapping is created
+
+<ScreenshotPlaceholder
+  id="mapping-create"
+  alt="Creating a new mapping"
+  caption="Adding a target stylesheet to a CSS file"
+/>
+
+### Removing a Mapping
+
+1. Find the mapping connection
+2. Click the X button on the connection
+3. The mapping is removed
+
+### Multiple Targets
+
+One CSS file can target multiple stylesheets:
+
+<ScreenshotPlaceholder
+  id="mapping-multiple"
+  alt="CSS file with multiple targets"
+  caption="A single CSS file targeting multiple stylesheets"
+/>
+
+1. Select your CSS file
+2. Click "Add Target" multiple times
+3. Add each stylesheet you want to target
+
+## Expert Mode
+
+Expert Mode lets you edit the mapping.json directly.
+
+<ScreenshotPlaceholder
+  id="mapping-expert-mode"
+  alt="Mapping Editor Expert Mode"
+  caption="Direct JSON editing for mappings"
+/>
+
+### Mapping Syntax
+
+#### Basic (Single Target)
+
+```json
+{
+  "my-file.uss": "FMColours"
+}
+```
+
+This means `styles/my-file.uss` only applies to the `FMColours` stylesheet.
+
+#### Multiple Targets
+
+```json
+{
+  "base.uss": ["FMColours", "UIStyles", "BaseStyles"]
+}
+```
+
+The CSS applies to all three stylesheets.
+
+#### Object Syntax
+
+For complex configurations:
+
+```json
+{
+  "base.uss": {
+    "stylesheets": ["FMColours", "UIStyles"]
+  }
+}
+```
+
+### Complete Example
+
+```json
+{
+  "main.uss": ["FMColours", "UIStyles"],
+  "match.uss": "MatchColours",
+  "buttons.uss": ["UIStyles", "ButtonStyles"]
+}
+```
+
+## How Mapping Works
+
+### Without Mapping
+
+If you have `styles/base.uss`:
+
+```css
+:root {
+  --primary: #ff0000;
+}
+```
+
+This changes `--primary` in **no** stylesheets.
+
+### With Mapping
+
+With `styles/mapping.json`:
+
+```json
+{
+  "base.uss": "FMColours"
+}
+```
+
+Now `base.uss` only changes `--primary` in the `FMColours` stylesheet.
+
+### Unmapped Files
+
+CSS files **not** listed in mapping.json apply nowhere.
+
+```
+styles/
+├── base.uss        # Not in mapping → applies nowhere
+├── match.uss       # In mapping → applies only to MatchColours
+└── mapping.json
+```
+
+## Finding Stylesheet Names
+
+How do you know which stylesheets exist?
+
+Use the bundle viewer or a community skin as a reference.
+
+### Common FM Stylesheets
+
+| Stylesheet | Purpose |
+|------------|---------|
+| `FigmaGeneratedStyles` | Main style class definitions |
+| `FMColours` | General colour styling |
+| `FigmaStyleVariables` | Main colour variable definitions |
+| `SIStyles` | Other styling |
+| `FigmaGeneratedVariableStyles` | Base/default styles |
+
+*Note: Actual stylesheet names may vary by FM version.*
+
+## Workflow Example
+
+### Goal: Different colors for main UI vs match screens
+
+**Step 1: Create CSS files**
+
+`styles/main.uss`:
+```css
+:root {
+  --primary: #3498db;  /* Blue */
+}
+```
+
+`styles/match.uss`:
+```css
+:root {
+  --primary: #27ae60;  /* Green */
+}
+```
+
+**Step 2: Create mapping**
+
+`styles/mapping.json`:
+```json
+{
+  "main.uss": ["FMColours", "UIStyles"],
+  "match.uss": "MatchColours"
+}
+```
+
+**Step 3: Build and test**
+
+- Main UI shows blue
+- Match screens show green
+
+## Asset Mapping
+
+Mapping also works for assets in `graphics/icons/mapping.json` and `graphics/backgrounds/mapping.json`, but with different syntax. See [Texture Replacement](/graphics/texture-replacement).
+
+## Tips and Best Practices
+
+### Start Without Mapping
+
+For simple skins, you may not need mapping:
+
+1. Use a single `base.uss` for global colours
+2. Add mapping only when you need different colours in different places
+
+### Be Explicit
+
+If you're using mapping, map all your CSS files:
+
+```json
+{
+  "base.uss": ["FMColours", "UIStyles", "BaseStyleSheet"],
+  "match.uss": "MatchColours",
+  "buttons.uss": "ButtonStyles"
+}
+```
+
+### Document Your Strategy
+
+In a README or comments:
+
+```
+Mapping Strategy:
+- base.uss → Global colors (FMColours, UIStyles)
+- match.uss → Match screen specific (MatchColours)
+- buttons.uss → Button overrides only (ButtonStyles)
+```
+
+### Test Each Target
+
+After creating mappings:
+
+1. Check that the right stylesheets were modified
+2. Test in FM that changes appear in expected places
+
+## Troubleshooting
+
+### "Mapping not applying"
+
+1. Check file is named exactly `mapping.json`
+2. Verify JSON syntax is valid
+3. Ensure CSS file names match exactly (case-sensitive)
+4. Confirm stylesheet names are correct
+
+### "Changes appearing everywhere"
+
+- Your CSS file isn't in mapping.json (unmapped = global)
+- Add it to mapping.json to restrict targeting
+
+### "Changes not appearing anywhere"
+
+- Stylesheet name might be wrong
+- Check for typos in mapping.json
+
+### "JSON syntax error"
+
+Validate your JSON:
+
+```json
+// Common mistakes
+{
+  "base.uss": "FMColours",  // No trailing comma on last line
+}
+
+// Correct
+{
+  "base.uss": "FMColours"
+}
+```
+
+---
+
+**Next:** [Table View Editor](/editors/table-view-editor) - Configure table layouts.

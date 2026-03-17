@@ -1,0 +1,130 @@
+---
+title: Applying to Game
+description: Install your built skin in Football Manager 26.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Applying to Game
+
+After building your skin, you need to install it in Football Manager's skins directory and activate it in-game.
+
+## Installation Methods
+
+### Automatic Installation
+
+FM Skin Builder can copy files directly:
+
+1. Build your skin
+2. Click **Apply to Game** (or Build > Game Status)
+3. Files are copied to FM's bundles directory
+4. Ready to activate in FM
+
+<ScreenshotPlaceholder
+  id="install-button"
+  alt="Install to Game button"
+  caption="One-click installation to FM's skins folder"
+/>
+
+### Manual Installation
+
+** DO THIS AT YOUR OWN RISK, PLEASE BACK UP FILES **
+
+Copy files yourself:
+
+1. Build your skin
+2. Open `packages/` folder in your project
+3. Copy all contents
+4. Paste to FM's bundles directory (see paths in docs)
+
+## Verifying Installation
+
+### Visual Check
+
+After applying your skin, verify your changes:
+
+1. Look for your color changes
+2. Check modified icons/backgrounds
+3. Navigate different screens
+
+<ScreenshotPlaceholder
+  id="skin-active"
+  alt="FM with custom skin active"
+  caption="Your custom skin active in FM26"
+/>
+
+### Troubleshooting Visual Issues
+
+If something looks wrong:
+
+1. **Colors not changed:** Variable names might not match
+2. **Icons missing:** Asset mapping may be incorrect
+3. **Layout broken:** UXML changes may have issues
+
+See [Troubleshooting](/troubleshooting) for detailed help.
+
+## Updating Your Skin
+
+### Development Workflow
+
+Typical update cycle:
+
+1. Make changes in FM Skin Builder
+2. Build
+3. Apply to Game
+4. Launch FM
+5. Verify changes
+6. Restore backup before building again
+7. Repeat if needed
+
+## Sharing Your Skin
+
+### Preparing for Distribution
+
+1. Build final version
+2. Test thoroughly
+3. Package the `packages/` folder contents
+
+### Distribution Package
+
+Create a zip containing:
+```
+my-skin/
+├── [bundle files]
+├── skin.json
+└── README.txt  (optional)
+```
+
+### Installation Instructions for Users
+
+Include these instructions:
+
+1. Extract the zip file
+2. Copy to the bundles folder in FM's installation directory
+3. Launch FM26
+
+## Tips
+
+### Use Consistent Naming
+
+Name your skin folder clearly:
+- Good: `dark-mode-pro`, `minimal-ui`
+- Avoid: `test`, `new folder`, `skin1`
+
+### Keep Development and Final Separate
+
+Consider separate installations:
+- Development: Frequent updates, may be unstable
+- Final: Stable version for actual gameplay
+
+### Backup Before Major Changes
+
+Before testing significant changes:
+1. Back up your current skin folder
+2. Install and test new version
+3. Restore backup if needed
+
+---
+
+**Next:** [Backup & Restore](/building/backup-restore) - Protect your game files.

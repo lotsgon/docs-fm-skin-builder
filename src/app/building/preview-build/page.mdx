@@ -1,0 +1,230 @@
+---
+title: Preview Build
+description: Quickly validate your skin changes with preview mode.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Preview Build
+
+Preview Build (also called Dry Run) lets you validate your changes without generating full output files. It's faster than a full build and helps catch errors early.
+
+## What is Preview Build?
+
+Preview Build performs most build steps but doesn't write bundle files:
+
+| Step | Full Build | Preview Build |
+|------|------------|---------------|
+| Parse config | ✓ | ✓ |
+| Validate CSS | ✓ | ✓ |
+| Check mappings | ✓ | ✓ |
+| Scan bundles | ✓ | ✓ (cached) |
+| Match selectors | ✓ | ✓ |
+| Write output | ✓ | ✗ |
+
+**Benefits:**
+- Faster execution
+- No disk writes
+- Same validation
+- Good for iteration
+
+## Running Preview Build
+
+### Toolbar
+
+Click the "Preview" button (or dropdown arrow on Build button).
+
+<ScreenshotPlaceholder
+  id="preview-button"
+  alt="Preview Build button in toolbar"
+  caption="Click Preview to run a dry run build"
+/>
+
+### Menu
+
+Build > Preview
+
+## Understanding Output
+
+Preview Build shows what would happen:
+
+<ScreenshotPlaceholder
+  id="preview-output"
+  alt="Preview Build output panel"
+  caption="Preview output showing matched selectors and potential changes"
+/>
+
+### Successful Preview
+
+```
+[Preview] Starting dry run...
+[Preview] Config validated ✓
+[Preview] Found 3 CSS files
+[Preview] Scanning bundles... (using cache)
+[Preview] Matched selectors:
+  - :root (--primary) → FMColours, UIStyles, BaseStyles
+  - .green → FMColours
+  - .button-primary → UIStyles
+[Preview] Would modify 3 stylesheets
+[Preview] Assets to process: 2
+[Preview] Dry run complete - no files written
+```
+
+### Preview with Warnings
+
+```
+[Preview] Starting dry run...
+[Preview] Config validated ✓
+[Preview] Found 2 CSS files
+⚠ Warning: Selector '.nonexistent' not found in any stylesheet
+⚠ Warning: Variable '--custom-color' not found
+[Preview] Would modify 1 stylesheet
+[Preview] Dry run complete - no files written
+```
+
+### Preview with Errors
+
+```
+[Preview] Starting dry run...
+✗ Error: Invalid JSON in config.json at line 5
+[Preview] Build would fail - fix errors before full build
+```
+
+## When to Use Preview
+
+### Quick Validation
+
+After editing CSS:
+1. Make changes
+2. Check for errors/warnings
+3. Fix issues
+4. Full build when ready
+
+### Testing Selectors
+
+Verify your selectors match:
+
+1. Add CSS with new selector
+2. Preview build
+3. Check output for selector matches
+4. If not matched, adjust selector name
+
+### Before Full Build
+
+Always preview first when:
+- Major changes made
+- New selectors added
+- Mapping configuration changed
+
+## Preview vs Full Build
+
+| Aspect | Preview | Full Build |
+|--------|---------|------------|
+| Speed | Fast | Slower |
+| Output files | None | Yes |
+| Validation | Full | Full |
+| Can test in FM | No | Yes |
+| Catches errors | Yes | Yes |
+
+## Interpreting Results
+
+### "Matched selectors"
+
+Shows which CSS selectors found targets:
+
+```
+- :root (--primary) → FMColours, UIStyles
+```
+
+This means `--primary` variable exists in both stylesheets.
+
+### "Not found" Warnings
+
+Selector doesn't match anything:
+
+```
+⚠ Warning: Selector '.my-custom-class' not found
+```
+
+**Actions:**
+- Check spelling
+- Verify class exists in FM
+- Use debug mode to find correct names
+
+### "Would modify X stylesheets"
+
+Indicates how many files would change:
+
+```
+[Preview] Would modify 5 stylesheets
+```
+
+**Considerations:**
+- Is this expected?
+- Too many might indicate broad wildcards
+- Too few might mean selectors not matching
+
+### "Assets to process"
+
+Number of asset replacements:
+
+```
+[Preview] Assets to process: 3
+```
+
+Based on your includes and mappings.
+
+## Tips
+
+### Use Preview Liberally
+
+It's fast - use it frequently:
+- After every significant CSS change
+- Before any full build
+- When troubleshooting
+
+### Read All Warnings
+
+Warnings indicate potential issues:
+- Selectors not matching (typo?)
+- Variables not found (wrong name?)
+- Multiple matches (intended?)
+
+### Don't Ignore Errors
+
+Errors mean build will fail:
+- Fix all errors before full build
+- Preview again to confirm fixes
+
+### Check Match Counts
+
+If you expect 10 selectors to match but only 5 do:
+- Something isn't matching
+- Review your CSS
+- Check selector names
+
+## Common Issues
+
+### "No selectors matched"
+
+Your CSS isn't targeting anything:
+- Check selector syntax
+- Verify names against Asset Catalogue
+- Try broader wildcards to test
+
+### "Too many matches"
+
+Using wildcards that match more than intended:
+- Be more specific with selectors
+- Use mapping for targeted application
+
+### "Cache not working"
+
+Every preview scans bundles:
+- Check `.cache/` folder exists
+- May indicate permission issues
+
+---
+
+**Next:** [Full Build](/building/full-build) - Generate actual output files.

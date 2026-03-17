@@ -1,0 +1,139 @@
+---
+title: Documentation
+description: Complete documentation for FM Skin Builder - create custom Football Manager skins.
+searchable: true
+---
+
+import { Cards } from 'nextra/components'
+import { BookOpen, Folder, Edit3, Image, Package, FileText, HelpCircle, Users } from 'lucide-react'
+
+# FM Skin Builder Documentation
+
+Welcome to the FM Skin Builder documentation! This is your complete guide to creating custom skins for Football Manager 26.
+
+## What is FM Skin Builder?
+
+FM Skin Builder is a desktop application that makes it easy to customize Football Manager's appearance. Instead of manually editing game files, you can:
+
+- **Edit colors** using familiar CSS syntax with visual color pickers
+- **Replace assets** - icons, backgrounds, and fonts
+- **Customize layouts** using UXML editors
+- **Preview and build** with one click
+- **Install to FM** automatically
+
+## Quick Start
+
+New to FM Skin Builder? Start here:
+
+<Cards>
+  <Cards.Card
+    icon={<BookOpen />}
+    title="Installation"
+    href="/getting-started/installation"
+  />
+  <Cards.Card
+    icon={<BookOpen />}
+    title="Your First Skin"
+    href="/getting-started/first-skin"
+  />
+  <Cards.Card
+    icon={<BookOpen />}
+    title="Interface Tour"
+    href="/getting-started/interface-tour"
+  />
+</Cards>
+
+## Documentation Sections
+
+### Getting Started
+
+Learn the basics and create your first skin.
+
+<Cards>
+  <Cards.Card
+    icon={<BookOpen />}
+    title="Getting Started"
+    href="/getting-started"
+  />
+</Cards>
+
+### Features
+
+<Cards>
+  <Cards.Card
+    icon={<Folder />}
+    title="Workspace"
+    href="/workspace"
+  />
+  <Cards.Card
+    icon={<Edit3 />}
+    title="Editors"
+    href="/editors"
+  />
+  <Cards.Card
+    icon={<Image />}
+    title="Assets"
+    href="/assets"
+  />
+  <Cards.Card
+    icon={<Package />}
+    title="Building"
+    href="/building"
+  />
+</Cards>
+
+### Help & Reference
+
+<Cards>
+  <Cards.Card
+    icon={<FileText />}
+    title="Unity UI Toolkit Docs"
+    href="https://docs.unity3d.com/6000.3/Documentation/Manual/UIElements.html"
+  />
+    <Cards.Card
+    icon={<FileText />}
+    title="References"
+    href="/references"
+  />
+  <Cards.Card
+    icon={<HelpCircle />}
+    title="Troubleshooting"
+    href="/troubleshooting"
+  />
+    <Cards.Card
+    icon={<Users />}
+    title="Community"
+    href="/community"
+  />
+</Cards>
+
+## What You Can Customize
+
+| Feature | Description |
+|---------|-------------|
+| **Colors** | Change any color in FM using CSS variables |
+| **UI Elements** | Override buttons, text, panels, and more |
+| **Icons** | Replace game icons with custom images |
+| **Backgrounds** | Add custom background images |
+| **Fonts** | Use custom typefaces |
+| **Layouts** | Modify UI structure with UXML |
+
+## For FM24 Skinners
+
+If you're familiar with FM24's XML-based skinning, FM Skin Builder's CSS approach will feel refreshingly familiar. Key differences:
+
+| Aspect | FM24 (XML) | FM26 (CSS) |
+|--------|-----------|-----------|
+| Format | XML tags | CSS syntax |
+| Variables | `<colour name="x">` | `--variable-name` |
+| Colors | `value="RRGGBB"` | `#RRGGBB` |
+| Files | `.xml` | `.uss` or `.css` |
+
+**What's better:**
+- CSS is more familiar if you've done web development
+- Variables can reference other variables
+- Better tooling with syntax highlighting and color pickers
+
+---
+
+Ready to start? **[Installation →](/getting-started/installation)**

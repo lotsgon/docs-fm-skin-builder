@@ -1,0 +1,304 @@
+---
+title: Font Replacement
+description: Add custom fonts to Football Manager.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Font Replacement
+
+FM Skin Builder supports replacing Football Manager's fonts with custom typefaces. This lets you change the typography throughout the game.
+
+## Supported Formats
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| TrueType | `.ttf` | Most common, widely supported |
+| OpenType | `.otf` | Modern format, advanced features |
+
+## FM's Font System
+
+Football Manager uses different fonts for different purposes:
+
+| Usage | Description |
+|-------|-------------|
+| **UI Font** | General interface text |
+| **Heading Font** | Headers and titles |
+| **Body Font** | Long-form text |
+| **Mono Font** | Code-like text, numbers |
+| **League Fonts** | Competition-specific (Champions League, etc.) |
+
+## Setting Up Fonts
+
+### Folder Structure
+
+```
+my-skin/
+├── config.json
+└── fonts/
+    ├── my-font.ttf
+    ├── my-font-bold.ttf
+    └── mapping.json
+```
+
+### Adding to Config
+
+Include fonts in your config:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin",
+  "includes": ["fonts"]
+}
+```
+
+### Font Mapping
+
+Create `fonts/mapping.json`:
+
+```json
+{
+  "my-font.ttf": "UIFont",
+  "my-font-bold.ttf": "UIFont-Bold"
+}
+```
+
+## Finding Font Names
+
+### Bundle Viewer
+
+Browse fonts in the Bundle Viewer:
+
+<ScreenshotPlaceholder
+  id="bundle-viewer-fonts"
+  alt="Font browser in Bundle Viewer"
+  caption="Discover available fonts in the Bundle Viewer"
+/>
+
+## Font Mapping Syntax
+
+### Basic Replacement
+
+```json
+{
+  "your_font_file.ttf": "original_font_name"
+}
+```
+
+**Example:**
+```json
+{
+  "roboto-regular.ttf": "UIFont",
+  "roboto-bold.ttf": "UIFont-Bold"
+}
+```
+
+This maps:
+- `UIFont` → `fonts/roboto-regular.ttf`
+- `UIFont-Bold` → `fonts/roboto-bold.ttf`
+
+### Font Families
+
+For fonts with multiple weights:
+
+```json
+{
+  "inter-regular.ttf": "UIFont",
+  "inter-light.ttf": "UIFont-Light",
+  "inter-bold.ttf": "UIFont-Bold",
+  "inter-black.ttf": "UIFont-Black"
+}
+```
+
+## Choosing Fonts
+
+### Considerations
+
+| Factor | Recommendation |
+|--------|----------------|
+| **Readability** | Clear at small sizes |
+| **Style** | Matches your skin theme |
+| **Completeness** | Has all needed characters |
+| **Weight range** | Multiple weights available |
+| **License** | Free for personal use |
+
+### Recommended Free Fonts
+
+| Font | Style | Source |
+|------|-------|--------|
+| Inter | Modern sans-serif | Google Fonts |
+| Roboto | Clean sans-serif | Google Fonts |
+| Open Sans | Readable sans | Google Fonts |
+| Poppins | Geometric | Google Fonts |
+| JetBrains Mono | Monospace | JetBrains |
+
+### Font Sources
+
+- [Google Fonts](https://fonts.google.com/) - Free, open source
+- [Font Squirrel](https://www.fontsquirrel.com/) - Free commercial fonts
+- [DaFont](https://www.dafont.com/) - Free fonts (check licenses)
+
+## League-Specific Fonts
+
+FM includes fonts for specific competitions. You can replace these as well.
+
+### Replacing League Fonts
+
+```json
+{
+  "my-ucl-font.ttf": "UCLFont",
+  "my-uel-font.ttf": "UELFont",
+  "my-pl-font.ttf": "PremierLeagueFont"
+}
+```
+
+**Note:** These appear in specific competition contexts.
+
+## Practical Example
+
+### Goal: Custom UI Font
+
+Replace the main UI font with Inter:
+
+**Step 1: Download the font**
+
+Get Inter from Google Fonts:
+- inter-regular.ttf
+- inter-bold.ttf
+- inter-light.ttf
+
+**Step 2: Add to project**
+
+```
+fonts/
+├── inter-regular.ttf
+├── inter-bold.ttf
+├── inter-light.ttf
+└── mapping.json
+```
+
+**Step 3: Create mapping**
+
+`fonts/mapping.json`:
+```json
+{
+  "inter-regular.ttf": "UIFont",
+  "inter-bold.ttf": "UIFont-Bold",
+  "inter-light.ttf": "UIFont-Light"
+}
+```
+
+**Step 4: Update config**
+
+```json
+{
+  "includes": ["fonts"]
+}
+```
+
+**Step 5: Build and test**
+
+Build your skin and verify the new font appears in FM.
+
+<ScreenshotPlaceholder
+  id="font-replacement-result"
+  alt="Custom font in FM"
+  caption="Inter font replacing the default UI font"
+/>
+
+## Font Variants
+
+### Handling Bold/Italic
+
+If a font has separate files for variants:
+
+```json
+{
+  "myfont-regular.ttf": "UIFont",
+  "myfont-bold.ttf": "UIFont-Bold",
+  "myfont-italic.ttf": "UIFont-Italic",
+  "myfont-bolditalic.ttf": "UIFont-BoldItalic"
+}
+```
+
+### Single Font File
+
+If using a variable font or single file:
+
+```json
+{
+  "myfont.ttf": ["UIFont", "UIFont-Bold"]
+}
+```
+
+*Note: Bold may not look correct if the font doesn't have bold data.*
+
+## Tips and Best Practices
+
+### Test Readability
+
+Small UI text must be readable:
+- Test at actual game resolution
+- Check different zoom levels
+- Ensure numbers and letters are distinct
+
+### Provide All Variants
+
+If replacing UIFont, provide:
+- Regular
+- Bold
+- Any other variants used
+
+Missing variants may cause FM to use fallback fonts.
+
+### Consider Character Support
+
+Ensure your font supports:
+- Basic Latin (English)
+- Extended Latin (accented characters for other languages)
+- Numerals and symbols
+
+### Backup Original Files
+
+Some font changes can make text unreadable:
+- Keep your original skin
+- Test on a save you can afford to corrupt
+- Use restore if needed
+
+## Troubleshooting
+
+### "Font not appearing"
+
+1. Check mapping.json syntax
+2. Verify font file exists
+3. Ensure folder in config `includes`
+4. Try a different font file format
+
+### "Text looks wrong"
+
+- Font may be missing bold/italic variants
+- Add appropriate variant mappings
+- Or choose a font with full family
+
+### "Characters missing"
+
+- Font doesn't support needed characters
+- Choose a more complete font
+- Check language/Unicode support
+
+### "Font looks blurry"
+
+- Font may not be optimized for screen
+- Try a different font designed for displays
+- Check if FM's text scaling affects it
+
+### "Bold text looks the same"
+
+- No bold variant provided
+- Map `UIFont-Bold` to actual bold font file
+
+---
+
+**Next:** [Building](/building) - Learn about building and deploying your skin.

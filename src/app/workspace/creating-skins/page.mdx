@@ -1,0 +1,289 @@
+---
+title: Creating Skins
+description: Use the New Skin Wizard to create properly configured skin projects.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Creating Projects
+
+FM Skin Builder offers multiple ways to start a skin project. The New Skin Wizard is the recommended approach for most users.
+
+## New Skin Wizard
+
+The wizard guides you through project setup with sensible defaults.
+
+### Opening the Wizard
+
+1. **From Welcome Screen:** Click "New Skin"
+2. **From Menu:** File > New Skin
+
+<ScreenshotPlaceholder
+  id="new-skin-wizard-open"
+  alt="New Skin Wizard opening"
+  caption="The New Skin Wizard guides you through project creation"
+/>
+
+### Step 1: Basic Information
+
+Enter your skin's details:
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **Name** | Display name for your skin | "Dark Mode Pro" |
+| **Author** | Your name or username | "John Doe" |
+| **Version** | Initial version number | "1.0.0" |
+| **Location** | Where to save the project | `/Users/you/Documents/fm-skins/` |
+
+<ScreenshotPlaceholder
+  id="wizard-step1"
+  alt="Wizard Step 1 - Basic Information"
+  caption="Enter your skin's name, author, and save location"
+/>
+
+**Naming tips:**
+- Use clear, descriptive names
+- Avoid special characters (stick to letters, numbers, spaces, hyphens)
+- The folder name is generated from your skin name
+
+{/* ### Step 2: Template Selection
+
+Choose a starting template:
+
+| Template | Contents | Best For |
+|----------|----------|----------|
+| **Blank** | Just `config.json` | Experts who know what they need |
+| **Color Override** | `config.json` + `colours/base.uss` | Quick color changes |
+| **Full Theme** | All folders + example mappings | Complete skin projects |
+
+<ScreenshotPlaceholder
+  id="wizard-step2"
+  alt="Wizard Step 2 - Template Selection"
+  caption="Choose a template based on your needs"
+/> */}
+
+#### Blank Template
+
+Creates minimal structure:
+
+```
+my-skin/
+└── config.json
+```
+
+You'll need to manually add all files.
+
+{/* #### Color Override Template
+
+Includes color file structure:
+
+```
+my-skin/
+├── config.json
+└── colours/
+    └── base.uss
+```
+
+The `base.uss` contains example variables:
+
+```css
+:root {
+  --primary: #3498db;
+  --secondary: #2ecc71;
+  --accent: #e74c3c;
+}
+```
+  */}
+
+{/* #### Full Theme Template
+
+Complete project structure:
+
+```
+my-skin/
+├── config.json
+├── styles/
+│   ├── base.uss
+│   └── mapping.json
+└── graphics/
+    ├── icons/
+    │   └── mapping.json
+    └── backgrounds/
+        └── mapping.json
+```
+
+Includes example mapping files showing the syntax. */}
+
+### Step 2: Review and Create
+
+Review your choices and click **Create Skin**.
+
+<ScreenshotPlaceholder
+  id="wizard-step4"
+  alt="Wizard Step 4 - Review"
+  caption="Review all settings before creating the project"
+/>
+
+The wizard:
+1. Creates the folder structure
+2. Generates `config.json` with your details
+3. Opens the project in the Explorer
+
+## Manual Project Creation
+
+You can also create projects manually:
+
+### Minimal Manual Setup
+
+1. Create a folder anywhere on your computer
+2. Create `config.json` with required fields:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin"
+}
+```
+
+3. Open the folder in FM Skin Builder (File > Open Folder)
+
+### Full Manual Setup
+
+Create the complete structure:
+
+```
+my-skin/
+├── config.json
+├── styles/
+│   └── base.uss
+└── graphics/
+    └── icons/
+        └── mapping.json
+```
+
+**config.json:**
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin",
+  "author": "Your Name",
+  "version": "1.0.0",
+  "description": "A custom FM26 skin",
+  "includes": ["graphics/icons"]
+}
+```
+
+**styles/base.uss:**
+```css
+:root {
+  /* This is just an example uss variable, you will need to find one used within the game */
+  --primary: #ff0000;
+}
+```
+
+**graphics/icons/mapping.json:**
+```json
+{
+  "star.png": "game_star",
+  "heart.png": ["game_heart", "game_favorite"],
+  /* This wildcard (*) below allows you to map to multiple game assets of sizes like game_circle_1x, game_circle_2x at once */
+  "circle.png": ["game_circle_*"]
+}
+```
+
+## Opening Existing Projects
+
+### Recent Projects
+
+FM Skin Builder remembers your recent projects:
+
+1. Open the app
+2. Recent projects appear on the welcome screen
+3. Click to open
+
+<ScreenshotPlaceholder
+  id="recent-projects"
+  alt="Recent projects list"
+  caption="Quick access to recently opened projects"
+/>
+
+### Open Folder
+
+To open any skin folder:
+
+1. File > Open Folder
+2. Navigate to the folder containing `config.json`
+3. Select the folder and click Open
+
+### Drag and Drop
+
+Drag a folder onto FM Skin Builder to open it.
+
+## Project Validation
+
+When opening a project, FM Skin Builder validates:
+
+1. **config.json exists** - Required for all projects
+2. **schema_version is valid** - Must be `1`
+3. **JSON syntax is correct** - No parsing errors
+4. **includes paths exist** - Referenced folders are present
+
+### Validation Errors
+
+If validation fails:
+
+| Error | Solution |
+|-------|----------|
+| "config.json not found" | Create the file or select correct folder |
+| "Invalid schema_version" | Set `"schema_version": 1` |
+| "JSON syntax error" | Fix JSON formatting (use a validator) |
+| "Include path not found" | Create the folder or remove from includes |
+
+<ScreenshotPlaceholder
+  id="validation-error"
+  alt="Project validation error"
+  caption="Validation errors appear when opening invalid projects"
+/>
+
+## Multi-Project Workflow
+
+You can work on multiple skins:
+
+### Switching Projects
+
+- File > Open Skin > [project name]
+- Or close the skin and pick a recent skin
+
+## Best Practices
+
+### Folder Location
+
+- **Do:** Store projects in your Documents folder or a dedicated skins folder
+- **Don't:** Store in the FM installation directory
+- **Don't:** Store in system folders or temp directories
+
+### Naming Conventions
+
+```
+my-skins/
+├── dark-theme-v1/
+├── minimalist-ui/
+└── custom-colors-2024/
+```
+{/* 
+### Version Control
+
+Using Git? Add a `.gitignore`:
+
+```
+packages/
+.cache/
+*.log
+```
+
+This excludes build output and cache files. */}
+
+---
+
+**Next:** [File Browser](/workspace/file-browser) - Learn to navigate and manage project files.

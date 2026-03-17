@@ -1,0 +1,1 @@
+export { ScreenshotPlaceholder } from "./ScreenshotPlaceholder";

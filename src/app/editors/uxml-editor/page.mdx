@@ -1,0 +1,387 @@
+---
+title: UXML Editor
+description: Edit UI layouts using FM Skin Builder's UXML editor.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# UXML Editor
+# NOT SUPPORTED FULLY YET, EXPERT MODE ONLY EXPERIMENTAL
+
+The UXML Editor lets you modify Football Manager's UI layout structure. UXML (Unity XML) defines how UI elements are arranged and nested.
+
+## What is UXML?
+
+UXML is Unity's markup language for defining UI layouts. It's similar to HTML but for Unity's UI Toolkit.
+
+```xml
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement class="container">
+        <ui:Label text="Hello World" class="title" />
+        <ui:Button text="Click Me" name="my-button" />
+    </ui:VisualElement>
+</ui:UXML>
+```
+
+**Use cases in FM:**
+- Rearranging panel layouts
+- Adding or removing UI elements
+- Changing element nesting
+- Modifying element attributes
+
+## Opening the UXML Editor
+
+- Double-click any `.uxml` file in the Explorer
+- Create new UXML: File > New File, save with `.uxml` extension
+
+<ScreenshotPlaceholder
+  id="uxml-editor-overview"
+  alt="UXML Editor interface"
+  caption="The UXML Editor showing a layout file"
+/>
+
+## Simple Mode
+
+Simple Mode provides a visual interface for UXML editing without writing XML.
+
+### Element Tree
+
+The main panel shows a hierarchical tree of UI elements:
+
+<ScreenshotPlaceholder
+  id="uxml-element-tree"
+  alt="UXML element tree view"
+  caption="Visual tree showing element hierarchy"
+/>
+
+**Interactions:**
+- **Click** element to select it
+- **Double-click** to expand/collapse
+- **Drag** elements to rearrange
+- **Right-click** for context menu
+
+### Property Inspector
+
+When an element is selected, the Property Inspector appears:
+
+<ScreenshotPlaceholder
+  id="uxml-property-inspector"
+  alt="UXML property inspector"
+  caption="Edit element properties in the inspector"
+/>
+
+**Editable properties:**
+- **Name**: Element's identifier (`name="my-element"`)
+- **Classes**: CSS classes (`class="button primary"`)
+- **Text**: For labels and buttons
+- **Style**: Inline USS styles
+- **Custom attributes**: Element-specific properties
+
+### Element Palette
+
+The Element Palette shows available UXML elements:
+
+<ScreenshotPlaceholder
+  id="uxml-element-palette"
+  alt="UXML element palette"
+  caption="Drag elements from the palette to add them"
+/>
+
+**Common elements:**
+| Element | Purpose |
+|---------|---------|
+| `VisualElement` | Generic container |
+| `Label` | Text display |
+| `Button` | Clickable button |
+| `TextField` | Text input |
+| `Image` | Image display |
+| `ScrollView` | Scrollable container |
+| `Foldout` | Collapsible section |
+
+**To add an element:**
+1. Find it in the palette
+2. Drag onto the tree
+3. Drop where you want it (hover shows insertion point)
+
+### Live Preview
+
+As you edit, the preview updates in real-time:
+
+<ScreenshotPlaceholder
+  id="uxml-live-preview"
+  alt="UXML live preview"
+  caption="See changes immediately in the preview pane"
+/>
+
+**Preview features:**
+- Real-time updates
+- Zoom in/out
+- Element highlighting on hover
+- Click to select in tree
+
+### Drag and Drop Editing
+
+Rearrange elements by dragging:
+
+1. Click and hold an element in the tree
+2. Drag to new position
+3. Visual indicator shows where it will be placed
+4. Release to drop
+
+**Drop positions:**
+- **Before/After**: Places as sibling
+- **Inside**: Places as child (when dropping on a container)
+
+## Expert Mode
+
+Expert Mode gives you direct XML editing with syntax highlighting.
+
+<ScreenshotPlaceholder
+  id="uxml-expert-mode"
+  alt="UXML Expert Mode"
+  caption="Full UXML source code editing"
+/>
+
+### Syntax Highlighting
+
+- **Blue**: Element tags (`<ui:Button>`)
+- **Green**: Attribute values
+- **Purple**: Attribute names
+- **Gray**: Comments
+
+### XML Features
+
+| Feature | Shortcut |
+|---------|----------|
+| Auto-close tags | Automatic |
+| Toggle comment | Ctrl/Cmd + / |
+| Format document | Shift + Alt/Option + F |
+| Go to matching tag | Ctrl/Cmd + Shift + \ |
+
+### UXML Structure
+
+A basic UXML file:
+
+```xml
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <!-- Root element with namespace declaration -->
+
+    <ui:VisualElement class="main-container">
+        <!-- Child elements -->
+        <ui:Label text="Title" class="header" />
+
+        <ui:VisualElement class="content">
+            <ui:Button text="Action" name="action-btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
+```
+
+**Key parts:**
+- `xmlns:ui` - Namespace declaration (required)
+- `ui:` prefix - All Unity elements need this
+- Attributes - Configure each element
+
+## UXML Syntax
+
+### Elements
+
+```xml
+<!-- Self-closing element -->
+<ui:Label text="Hello" />
+
+<!-- Element with children -->
+<ui:VisualElement>
+    <ui:Label text="Child" />
+</ui:VisualElement>
+```
+
+### Common Attributes
+
+```xml
+<ui:Button
+    name="my-button"
+    text="Click Me"
+    class="btn primary"
+    style="width: 100px;"
+    tooltip="Button tooltip"
+/>
+```
+
+| Attribute | Purpose | Example |
+|-----------|---------|---------|
+| `name` | Unique identifier | `name="player-panel"` |
+| `class` | CSS classes | `class="btn primary"` |
+| `text` | Display text | `text="Hello"` |
+| `style` | Inline USS | `style="color: red;"` |
+| `tooltip` | Hover tooltip | `tooltip="Help text"` |
+
+### FM-Specific Elements
+
+Football Manager uses custom UXML elements:
+
+```xml
+<!-- FM-specific elements may appear like: -->
+<fm:PlayerCard player-id="12345" />
+<fm:RatingBar value="75" />
+```
+
+**Note:** FM's custom elements are defined in the game's assemblies. You can modify their attributes but not create new custom elements.
+
+## Common Tasks
+
+### Adding a New Element
+
+**Simple Mode:**
+1. Drag from Element Palette
+2. Drop into the tree
+3. Configure in Property Inspector
+
+**Expert Mode:**
+```xml
+<ui:VisualElement class="container">
+    <!-- Add new label here -->
+    <ui:Label text="New Label" class="my-label" />
+</ui:VisualElement>
+```
+
+### Reordering Elements
+
+**Simple Mode:**
+- Drag elements in the tree
+
+**Expert Mode:**
+- Cut and paste XML blocks
+
+### Removing an Element
+
+**Simple Mode:**
+- Select element, press Delete
+
+**Expert Mode:**
+- Delete the XML tags
+
+### Changing Classes
+
+**Simple Mode:**
+1. Select element
+2. Edit Classes field in inspector
+
+**Expert Mode:**
+```xml
+<!-- Before -->
+<ui:Button class="btn" />
+
+<!-- After -->
+<ui:Button class="btn primary highlighted" />
+```
+
+### Adding Inline Styles
+
+**Simple Mode:**
+1. Select element
+2. Add styles in Style field
+
+**Expert Mode:**
+```xml
+<ui:Label
+    text="Styled"
+    style="color: #ff0000; font-size: 16px;"
+/>
+```
+
+## Working with FM's UXML
+
+### Finding UXML Files
+
+FM's UXML files are embedded in bundles. To see examples:
+
+1. Extract from ui-panelids-uxml bundle using Bundle Viewer
+2. Extract from ui-tiles or ui-widgets bundles
+
+### Modifying Existing Layouts
+
+1. Find the UXML you want to modify (from debug output)
+2. Copy to your skin folder
+3. Edit in FM Skin Builder
+4. Configure mapping to target specific bundles
+
+### UXML Limitations
+
+- Cannot add completely new UI screens
+- Must match existing UXML structure expectations
+- Some elements require specific bindings to data
+
+## Tips and Best Practices
+
+### Use Meaningful Names
+
+```xml
+<!-- Good -->
+<ui:VisualElement name="player-stats-panel" class="panel">
+
+<!-- Less clear -->
+<ui:VisualElement name="ve1" class="c">
+```
+
+### Preserve Original Structure
+
+When modifying FM's UXML:
+- Keep required elements
+- Don't remove data-binding attributes
+- Maintain expected parent-child relationships
+
+### Test Frequently
+
+1. Make small changes
+2. Build and test in FM
+3. Verify nothing broke
+4. Continue editing
+
+### Use Comments
+
+```xml
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <!-- Main player card container -->
+    <ui:VisualElement class="player-card">
+
+        <!-- Header section with player name -->
+        <ui:VisualElement class="header">
+            <ui:Label name="player-name" />
+        </ui:VisualElement>
+
+        <!-- Stats section (modified) -->
+        <ui:VisualElement class="stats">
+            <!-- Added extra stat display -->
+            <ui:Label name="custom-stat" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
+```
+
+## Troubleshooting
+
+### "UXML parsing error"
+
+Check for:
+- Missing closing tags
+- Invalid attribute syntax
+- Missing namespace prefix (`ui:`)
+
+### "Changes not appearing"
+
+1. Ensure UXML is being processed (check includes)
+2. Verify you're modifying the correct file
+3. Rebuild and restart FM
+
+### "FM crashes with modified UXML"
+
+- You may have removed required elements
+- Restore original UXML and make smaller changes
+- Check FM's logs for specific errors
+
+---
+
+**Next:** [Config Editor](/editors/config-editor) - Edit skin configuration.

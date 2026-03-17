@@ -1,0 +1,82 @@
+---
+title: Assets
+description: Replace textures, sprites, and fonts in Football Manager.
+searchable: true
+asIndexPage: true
+---
+
+import { Cards } from 'nextra/components'
+import { Image, Layers, Type } from 'lucide-react'
+
+# Assets
+
+Beyond color changes, FM Skin Builder lets you replace visual assets - icons, backgrounds, and fonts. This section covers how to work with these asset types.
+
+<Cards>
+  <Cards.Card icon={<Image />} title="Texture Replacement" href="/assets/texture-replacement" />
+  <Cards.Card icon={<Layers />} title="Sprite Atlases" href="/assets/sprite-atlases" />
+  <Cards.Card icon={<Type />} title="Font Replacement" href="/assets/font-replacement" />
+</Cards>
+
+## Asset Types
+
+| Type | Description | Formats |
+|------|-------------|---------|
+| **Textures** | Icons, backgrounds, UI images | PNG, JPG, SVG |
+| **Sprites** | Sprite atlas elements | PNG, SVG |
+| **Fonts** | Custom typefaces | TTF, OTF |
+
+## Quick Start
+
+### Setting Up Asset Folders
+
+Create the folder structure:
+
+```
+my-skin/
+├── config.json
+├── styles/
+│   ├── base.uss
+│   └── mapping.json
+└── graphics/
+    ├── icons/
+    │   ├── my-icon.png
+    │   └── mapping.json
+    └── backgrounds/
+        ├── my-background.jpg
+        └── mapping.json
+```
+
+### Adding to Config
+
+Tell FM Skin Builder to process your assets:
+
+```json
+{
+  "schema_version": 1,
+  "name": "My Skin",
+  "includes": [
+    "graphics/icons",
+    "graphics/backgrounds"
+  ]
+}
+```
+
+### Creating Mappings
+
+Each asset folder needs a `mapping.json`:
+
+```json
+{
+  "my-icon.png": "original_icon_name",
+  "background.png": "game-background"
+}
+```
+
+## Asset Discovery
+
+Finding what assets you can replace:
+
+1. **[Asset Catalogue](/catalogue)** - Browse FM's sprites and textures
+2. **Bundle Viewer in App** - Browse FM's bundles
+3. **Trial and Error** - Use wildcards to discover names

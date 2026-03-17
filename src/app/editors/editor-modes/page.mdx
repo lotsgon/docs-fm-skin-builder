@@ -1,0 +1,231 @@
+---
+title: Simple vs Expert Mode
+description: Understand FM Skin Builder's two editing modes and when to use each.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Simple vs Expert Mode
+
+FM Skin Builder offers two editing modes that change how editors behave. Understanding these modes helps you work more efficiently.
+
+## Overview
+
+| Mode | Interface | Best For |
+|------|-----------|----------|
+| **Simple Mode** | Visual forms, color pickers, drag-and-drop | Beginners, quick edits, learning |
+| **Expert Mode** | Raw code editors with syntax highlighting | Advanced users, full control |
+
+<ScreenshotPlaceholder
+  id="mode-comparison"
+  alt="Side-by-side comparison of Simple and Expert modes"
+  caption="The same CSS file in Simple Mode (left) and Expert Mode (right)"
+/>
+
+## Switching Modes
+
+### Status Bar Toggle
+
+The quickest way:
+
+1. Look at the bottom status bar
+2. Find the mode indicator ("Simple" or "Expert")
+3. Click it to toggle
+
+<ScreenshotPlaceholder
+  id="status-bar-mode-toggle"
+  alt="Mode toggle in status bar"
+  caption="Click the mode indicator to switch"
+/>
+
+## Simple Mode
+
+Simple Mode provides visual interfaces that make editing intuitive, especially for newcomers.
+
+### CSS Editor in Simple Mode
+
+<ScreenshotPlaceholder
+  id="css-simple-mode"
+  alt="CSS Editor Simple Mode"
+  caption="Visual color pickers and property forms"
+/>
+
+Features:
+- **Color Pickers**: Click any color to open a visual picker
+- **Variable List**: Scrollable list of all CSS variables
+- **Grouped View**: Variables organized by category
+
+### UXML Editor in Simple Mode (Currently Not Available)
+
+<ScreenshotPlaceholder
+  id="uxml-simple-mode"
+  alt="UXML Editor Simple Mode"
+  caption="Element tree with drag-and-drop support"
+/>
+
+Features:
+- **Element Tree**: Visual hierarchy of UI elements
+- **Property Inspector**: Edit properties without touching code
+- **Element Palette**: Drag new elements onto the tree
+- **Live Preview**: See changes in real-time
+
+### Config Editor in Simple Mode
+
+<ScreenshotPlaceholder
+  id="config-simple-mode"
+  alt="Config Editor Simple Mode"
+  caption="Form-based config editing"
+/>
+
+Features:
+- **Form Fields**: Input boxes for each config property
+- **Checkbox Controls**: Toggle boolean options
+- **Folder Picker**: Visual selection for include paths
+- **Validation Feedback**: Immediate error highlighting
+
+### When to Use Simple Mode
+
+- You're new to FM Skin Builder
+- Making quick color tweaks
+- You prefer visual interfaces
+- You don't need fine-grained control
+- Learning how FM's styling system works
+
+## Expert Mode
+
+Expert Mode gives you direct access to the raw file contents with powerful editing features.
+
+### CSS Editor in Expert Mode
+
+<ScreenshotPlaceholder
+  id="css-expert-mode"
+  alt="CSS Editor Expert Mode"
+  caption="Full code editor with syntax highlighting"
+/>
+
+Features:
+- **Syntax Highlighting**: Color-coded CSS/USS syntax
+- **Line Numbers**: Easy navigation
+- **Auto-Fix Dialog**: Detect and fix common issues
+- **Code Folding**: Collapse sections
+- **Multi-Cursor**: Edit multiple locations simultaneously
+
+### UXML Editor in Expert Mode
+
+<ScreenshotPlaceholder
+  id="uxml-expert-mode"
+  alt="UXML Editor Expert Mode"
+  caption="Raw UXML/XML code editing"
+/>
+
+Features:
+- **XML Highlighting**: Proper UXML syntax colors
+- **Tag Auto-Close**: Automatically closes opening tags
+- **Attribute Suggestions**: Autocomplete for known attributes
+- **Format Document**: Auto-format messy XML
+
+### Config Editor in Expert Mode
+
+<ScreenshotPlaceholder
+  id="config-expert-mode"
+  alt="Config Editor Expert Mode"
+  caption="Direct JSON editing"
+/>
+
+Features:
+- **JSON Highlighting**: Syntax-colored JSON
+- **Bracket Matching**: Find matching braces
+- **Schema Validation**: Real-time JSON validation
+- **Format Document**: Pretty-print JSON
+
+### When to Use Expert Mode
+
+- You're comfortable with CSS/JSON/XML
+- Need fine-grained control
+- Copying code from examples
+- Troubleshooting issues
+- Working with complex selectors
+- Bulk editing
+
+## Mode Persistence
+
+Your mode choice persists:
+
+- **Per-session**: Mode stays the same until you change it
+- **Across restarts**: FM Skin Builder remembers your preference
+- **Not per-file**: All files open in your current mode
+
+## Syncing Between Modes
+
+Changes sync seamlessly between modes:
+
+1. Make edits in Simple Mode
+2. Switch to Expert Mode
+3. Your changes appear in the raw code
+4. Edit in Expert Mode
+5. Switch back to Simple Mode
+6. Visual editor reflects your code changes
+
+**Important:** Unsaved changes are preserved when switching modes. The file cache keeps your work regardless of which mode you're in.
+
+<ScreenshotPlaceholder
+  id="mode-sync"
+  alt="Changes syncing between modes"
+  caption="The same edits visible in both modes"
+/>
+
+## Hybrid Workflow
+
+Many users combine both modes:
+
+1. **Start in Simple Mode** - Use color pickers for initial colors
+2. **Switch to Expert Mode** - Copy/paste complex selectors from examples
+3. **Back to Simple Mode** - Fine-tune specific values
+4. **Expert Mode for review** - Verify the final code looks correct
+
+## Editor-Specific Mode Support
+
+Not all editors support both modes equally:
+
+| Editor | Simple Mode | Expert Mode |
+|--------|-------------|-------------|
+| CSS Editor | ✓ Full support | ✓ Full support |
+| UXML Editor | Not Supported | Limited |
+| Config Editor | ✓ Full support | ✓ Full support |
+| Mapping Editor | ✓ Full support | ✓ Full support |
+| Table View Editor | ✓ Full support | ✓ Full support |
+| Tile Layout Editor | ✓ Full support | ✓ Full support |
+
+## Recommendations by Task
+
+| Task | Recommended Mode |
+|------|------------------|
+| Changing a color | Simple - use color picker |
+| Adding CSS selectors | Expert - write code directly |
+| Editing config.json | Simple - use form fields |
+| Complex UXML changes | Expert - direct XML editing |
+| Learning FM's structure | Simple - explore visually |
+| Copying from tutorials | Expert - paste directly |
+
+## Troubleshooting Mode Issues
+
+### "Changes not appearing after mode switch"
+
+- Save the file before switching
+- Check if validation errors are blocking the visual rendering
+
+### "Simple Mode looks broken"
+
+- The file may have syntax errors
+- Switch to Expert Mode to see and fix errors
+- Invalid files can't be parsed for Simple Mode
+
+### "Can't find a setting in Simple Mode"
+
+- Some advanced options are Expert Mode only
+- Check the [Reference](/reference) section for expert-level settings
+
+---
+
+**Next:** [CSS Editor](/editors/css-editor) - Learn to edit colors and styles.

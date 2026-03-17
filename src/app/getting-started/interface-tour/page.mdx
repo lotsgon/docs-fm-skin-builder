@@ -1,0 +1,188 @@
+---
+title: Interface Tour
+description: Learn the FM Skin Builder interface - Activity Bar, editors, and panels.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Interface Tour
+
+FM Skin Builder's interface is designed for efficient skin development. This guide covers every major component you'll use.
+
+<ScreenshotPlaceholder
+  id="full-interface-annotated"
+  alt="FM Skin Builder interface with labeled components"
+  caption="The main interface: Activity Bar (left), Sidebar, Editor Area, and Status Bar"
+/>
+
+## Activity Bar
+
+The Activity Bar is the vertical icon strip on the left edge. It controls which panel appears in the sidebar.
+
+| Icon | Panel | Purpose |
+|------|-------|---------|
+| Files | **Explorer** | Browse and manage project files |
+| Package | **Bundles** | View and export from bundles |
+| Play | **Build** | Build, preview and apply skins |
+| Question Mark | **Help** | In-app documentation and tips, report bugs here also |
+| Gear | **Settings** | App configuration |
+
+<ScreenshotPlaceholder
+  id="activity-bar-icons"
+  alt="Activity Bar icons"
+  caption="Click Activity Bar icons to switch between panels"
+/>
+
+### Explorer Panel
+
+The default panel. Shows your skin project's file tree:
+
+- **Single-click** a file to open it in the editor
+- **Right-click** for context menu (New File, Rename, Delete)
+- **Drag and drop** to move files
+
+<ScreenshotPlaceholder
+  id="explorer-panel"
+  alt="Explorer panel showing project files"
+  caption="The Explorer panel displays your project's file structure"
+/>
+
+### Build Panel
+
+Manage skin builds and apply built skins to Football Manager:
+
+- Output
+  - Select build target (Preview or Install)
+  - Start build process
+  - View build progress and logs
+  - Change summary of last build
+- Game Status
+  - Apply skin to Football Manager
+  - Shows applied skin info
+
+<ScreenshotPlaceholder
+  id="changes-panel"
+  alt="Changes panel showing modifications"
+  caption="Track all your modifications in the Changes panel"
+/>
+
+### Help Panel
+
+Quick access to documentation and tips:
+
+- Small guide
+- Release notes
+- Report bugs
+
+### Settings Panel
+
+Configure FM Skin Builder:
+
+- **General**: Theme, auto-save, font size
+- **Paths**: FM installation location, default project folder
+
+## Editor Area
+
+The central workspace where you edit files. FM Skin Builder provides specialized editors for different file types.
+
+### Editor Tabs
+
+Multiple files can be open simultaneously:
+
+- Click a tab to switch to that file
+- Middle-click (or click X) to close a tab
+- Dot indicator shows unsaved changes
+
+<ScreenshotPlaceholder
+  id="editor-tabs"
+  alt="Editor tabs showing multiple open files"
+  caption="Work with multiple files using editor tabs"
+/>
+
+### Editor Types
+
+The editor adapts based on file type:
+
+| File Type | Editor | Features |
+|-----------|--------|----------|
+| `.uss`, `.css` | CSS Editor | Syntax highlighting, color pickers, auto-complete |
+| `.uxml` | UXML Editor | Element tree, property inspector, live preview |
+| `config.json` | Config Editor | Visual form or JSON editing |
+| `mapping.json` | Mapping Editor | File mapping configuration |
+| `.json` (table/tile) | Specialized Editors | Visual column/layout configuration |
+
+## Status Bar
+
+The horizontal bar at the bottom contains important information and controls.
+
+<ScreenshotPlaceholder
+  id="status-bar"
+  alt="Status bar components"
+  caption="The status bar shows file info, mode toggle, and notifications"
+/>
+
+### Key Status Bar Elements
+
+| Element | Description |
+|---------|-------------|
+| **Skin Info** | Current open skin details |
+| **Preview/Build Buttons** | Easy way to get to preview or build |
+| **Mode Toggle** | Switch between Simple and Expert modes |
+| **Notifications** | Build status, errors, warnings |
+| **Application Version** | Current version of your FM Skin Builder |
+
+### Simple vs Expert Mode
+
+The mode toggle is important! It changes how editors behave:
+
+| Mode | Best For | Editor Behavior |
+|------|----------|-----------------|
+| **Simple** | Beginners, quick edits | Visual forms, color pickers, drag-and-drop |
+| **Expert** | Advanced users, full control | Raw code editing, syntax highlighting |
+
+Click the mode indicator to toggle.
+
+## Context Menus
+
+Right-click almost anywhere for contextual options:
+
+### Explorer Context Menu
+- New File / New Folder
+- Rename / Delete
+- Copy/Cut/Paste
+- Reveal in File Explorer
+
+### Editor Context Menu
+- Cut / Copy / Paste
+- Find / Replace
+- Format Document
+- Go to Definition (for CSS variables)
+
+### Tab Context Menu
+- Close / Close Others / Close to Right / Close All
+
+## Customization
+
+### Theme
+
+Change the color theme:
+1. Settings > General > Theme
+2. Choose Light, Dark, or System
+
+### Layout
+
+- Drag the sidebar edge to resize
+- Collapse panels you don't need
+- Use View menu to show/hide elements
+
+## Tips for New Users
+
+1. **Start in Simple Mode** - Visual editors are easier to learn
+2. **Use the Explorer** - Keeps your project organized
+3. **Watch the Status Bar** - It tells you current state and mode
+4. **Learn shortcuts gradually** - Ctrl+S (Save) is the most important
+
+---
+
+**Next:** [Creating Projects](/workspace/creating-projects) - Learn about the New Skin Wizard and project setup.

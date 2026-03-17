@@ -1,0 +1,314 @@
+---
+title: Table View Editor
+description: Configure FM's table layouts like player lists and squad views.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Table View Editor
+
+The Table View Editor lets you customize Football Manager's table layouts - player lists, squad views, transfer lists, and other tabular data displays.
+
+## What are Table Views?
+
+Table views in FM display data in columns and rows:
+
+- Squad screen player list
+- Scouting results
+- Transfer market listings
+- Staff lists
+- Statistics tables
+
+Each table view is defined by a JSON configuration specifying which columns appear and how they're formatted.
+
+<ScreenshotPlaceholder
+  id="table-view-example"
+  alt="Example table view in FM"
+  caption="A table view showing player information in columns"
+/>
+
+## Opening the Table View Editor
+
+- Single-click a table view JSON file in your project
+- These files are typically in a `table-views/` folder
+
+<ScreenshotPlaceholder
+  id="table-view-editor-overview"
+  alt="Table View Editor interface"
+  caption="The Table View Editor showing column configuration"
+/>
+
+## Simple Mode
+
+Simple Mode provides visual column configuration.
+
+<ScreenshotPlaceholder
+  id="table-view-simple"
+  alt="Table View Editor Simple Mode"
+  caption="Visual column editor"
+/>
+
+### Column List
+
+The main panel shows all columns in the table:
+
+| Property | Description |
+|----------|-------------|
+| Name | Display header text |
+| Type | Data type (see Column Types) |
+| Width | Column width in pixels |
+| Visible | Show/hide toggle |
+
+### Reordering Columns
+
+Drag and drop to change column order:
+
+1. Click and hold a column row
+2. Drag right or left
+3. Release to set new position
+
+<ScreenshotPlaceholder
+  id="table-view-reorder"
+  alt="Dragging to reorder columns"
+  caption="Drag columns to change their order"
+/>
+
+### Adding Columns
+
+1. Click "Add Column" button
+2. Select column type from dropdown
+3. Configure properties in the panel
+
+<ScreenshotPlaceholder
+  id="table-view-add"
+  alt="Adding a new column"
+  caption="Add columns using the dropdown"
+/>
+
+### Removing Columns
+
+1. Select the column row
+2. Click the delete icon (or press Delete)
+
+### Column Properties
+
+When a column is selected, edit its properties:
+
+<ScreenshotPlaceholder
+  id="table-view-properties"
+  alt="Column property editor"
+  caption="Configure column properties"
+/>
+
+**Common properties:**
+- **Width**: Pixel width (0 = auto)
+- **Min Width**: Minimum pixel width
+- **Sortable**: Allow sorting by this column
+- **Required**: Whether column must be present
+
+## Expert Mode
+
+Expert Mode shows the raw JSON configuration.
+
+<ScreenshotPlaceholder
+  id="table-view-expert"
+  alt="Table View Editor Expert Mode"
+  caption="JSON view of table configuration"
+/>
+
+### JSON Structure
+
+```json
+{
+  "columns": [
+    {
+      "columnID": "inf",
+      "widthOverride": 0,
+      "minWidthOverride": 0,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "portrait-name",
+      "widthOverride": 180,
+      "minWidthOverride": 180,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "age",
+      "widthOverride": 40,
+      "minWidthOverride": 40,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "position",
+      "widthOverride": 110,
+      "minWidthOverride": 110,
+      "required": 0,
+      "sortingDisabled": 0
+    }
+  ]
+}
+```
+
+### Column Definition
+
+Each column object:
+
+```json
+{
+  "columnID": "position",
+  "widthOverride": 110,
+  "minWidthOverride": 110,
+  "required": 0,
+  "sortingDisabled": 0
+}
+```
+
+## Common Customizations
+
+### Creating a Compact View
+
+Reduce column widths:
+
+```json
+{
+  "columns": [
+    {
+      "columnID": "name",
+      "widthOverride": 150,
+      "minWidthOverride": 100,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "position",
+      "widthOverride": 40,
+      "minWidthOverride": 40,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "age",
+      "widthOverride": 30,
+      "minWidthOverride": 30,
+      "required": 0,
+      "sortingDisabled": 0
+    }
+]
+}
+```
+
+### Wide Name Column
+
+For full names:
+
+```json
+{
+  "columnID": "name",
+  "widthOverride": 250,
+  "minWidthOverride": 200,
+  "required": 0,
+  "sortingDisabled": 0
+}
+```
+
+### Attribute-Heavy View
+
+Focus on stats:
+
+```json
+{
+  "columns": [
+    {
+      "columnID": "name",
+      "widthOverride": 150,
+      "minWidthOverride": 100,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "attribute-pace",
+      "widthOverride": 35,
+      "minWidthOverride": 35,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "attribute-finishing",
+      "widthOverride": 35,
+      "minWidthOverride": 35,
+      "required": 0,
+      "sortingDisabled": 0
+    },
+    {
+      "columnID": "attribute-passing",
+      "widthOverride": 35,
+      "minWidthOverride": 35,
+      "required": 0,
+      "sortingDisabled": 0
+    }
+  ]
+}
+```
+
+## Tips and Best Practices
+
+### Match FM's Style
+
+Look at existing table views in FM for reference:
+
+1. Find extracted table configs
+2. Use similar column structures
+
+### Consider Screen Size
+
+Wide tables may not fit on all screens:
+
+- Use reasonable column widths
+- Mark less important columns as resizable
+- Consider which columns are essential
+
+### Test With Real Data
+
+Build and test in FM:
+
+1. Make changes
+2. Build skin
+3. Check the table in FM
+4. Verify columns display correctly
+
+### Use Appropriate Widths
+
+| Content Type | Suggested Width |
+|--------------|-----------------|
+| Short text (Pos) | 40-60px |
+| Names | 150-250px |
+| Numbers | 40-60px |
+| Dates | 80-100px |
+| Currency | 80-120px |
+
+## Troubleshooting
+
+### "Columns not appearing"
+
+- Check JSON syntax is valid
+- Verify column types are correct
+- Ensure table config is being applied
+
+### "Wrong data in columns"
+
+- Column type doesn't match expected data
+- Check attribute names for typos
+
+### "Table looks broken"
+
+- Total width may exceed available space
+- Reduce column widths or remove columns
+
+---
+
+**Next:** [Tile Layout Editor](/editors/tile-layout-editor) - Configure grid layouts.

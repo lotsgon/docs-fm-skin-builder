@@ -1,0 +1,227 @@
+@import "tailwindcss";
+@import "nextra-theme-docs/style.css";
+
+@variant dark (&:where(.dark *));
+
+@layer base {
+  :root {
+    /* Brand colors — matches #4E1FAD */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --primary: 260 70% 40%;
+    --primary-light: 260 70% 50%;
+    --primary-dark: 260 70% 32%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --border: 214 32% 91%;
+    --ring: 260 70% 40%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --radius: 0.5rem;
+
+    /* Nextra primary — #4E1FAD */
+    --nextra-primary-hue: 260deg !important;
+    --nextra-primary-saturation: 70% !important;
+    --nextra-primary-lightness: 40% !important;
+
+    /* Force Nextra's computed primary palette to use #4E1FAD for active states */
+    --x-color-primary-100: #4E1FAD !important;
+    --x-color-primary-800: white !important;
+
+    /* Override Nextra font system with brand fonts */
+    --x-font-sans: var(--font-hind, "Hind", sans-serif);
+    --x-font-mono: "Menlo", "Monaco", "Consolas", monospace;
+    --x-default-font-family: var(--font-hind, "Hind", sans-serif);
+    --x-default-mono-font-family: "Menlo", "Monaco", "Consolas", monospace;
+
+    /* Typography */
+    --font-h1: 2.25rem;
+    --line-h1: 2.5rem;
+    --letter-h1: -0.02em;
+    --font-h2: 1.875rem;
+    --line-h2: 2.25rem;
+    --letter-h2: -0.01em;
+    --font-h3: 1.5rem;
+    --line-h3: 2rem;
+    --letter-h3: -0.01em;
+    --font-h4: 1.25rem;
+    --line-h4: 1.75rem;
+    --letter-h4: -0.005em;
+    --font-body: 1rem;
+    --line-body: 1.5rem;
+  }
+
+  html.dark,
+  .dark {
+    --background: 220 16% 6%;
+    --foreground: 210 40% 96%;
+    --primary: 260 70% 60%;
+    --primary-light: 260 78% 72%;
+    --primary-dark: 260 70% 48%;
+    --primary-foreground: 222 47% 11%;
+    --muted: 220 12% 14%;
+    --muted-foreground: 215 23% 75%;
+    --accent: 220 12% 18%;
+    --accent-foreground: 210 40% 96%;
+    --border: 220 13% 22%;
+    --ring: 260 60% 60%;
+
+    /* Dark mode: active bg is translucent purple, text is light purple */
+    --x-color-primary-100: #4E1FAD !important;
+    --x-color-primary-400: #4E1FAD !important;
+    --x-color-primary-600: white !important;
+    --x-color-primary-800: white !important;
+  }
+
+  body {
+    font-family: var(--font-hind, "Hind", sans-serif) !important;
+    font-weight: 400;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-poppins, "Poppins", sans-serif) !important;
+  }
+}
+
+/* Logo: black in light mode, white in dark mode */
+.logo-icon svg {
+  color: #1a1a2e;
+}
+html.dark .logo-icon svg,
+.dark .logo-icon svg {
+  color: white;
+}
+
+/* ── Kill the mask-image that washes out sidebar colors ── */
+.nextra-mask {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+/* ── Sidebar as floating card ── */
+.nextra-sidebar {
+  background-color: transparent !important;
+  border-inline-end: none !important;
+  /* Spacing from navbar and page bottom */
+  padding: 0.75rem 0 0.75rem 0.75rem !important;
+}
+
+/* Card on the scrollable wrapper (first child of aside).
+   Only background + border-radius + box-shadow — NO margin/padding
+   to avoid breaking Nextra's horizontal collapse width measurement. */
+.nextra-sidebar > div:first-child {
+  background-color: #f5f5f8;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.04),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Footer: bottom half of the card — full width of the aside */
+.nextra-sidebar .nextra-sidebar-footer {
+  background-color: #f5f5f8;
+  border-top: none !important;
+  border-radius: 0 0 12px 12px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  margin-inline: 0 !important;
+}
+
+/* Dark mode */
+html.dark .nextra-sidebar > div:first-child,
+.dark .nextra-sidebar > div:first-child {
+  background-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+html.dark .nextra-sidebar .nextra-sidebar-footer,
+.dark .nextra-sidebar .nextra-sidebar-footer {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-top: none !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Fix: Nextra's horizontal Collapse sets an inline `style.width`
+   on expand that never gets removed. This causes the menu to stay
+   narrower after a collapse→reopen cycle. Override it when the
+   sidebar is expanded (wrapper loses .no-scrollbar when expanded). */
+.nextra-sidebar > div:not(.no-scrollbar) > div {
+  width: auto !important;
+}
+.nextra-sidebar > div:not(.no-scrollbar) > div > * {
+  width: auto !important;
+}
+
+/* ── Sidebar link states — match main site nav pill (#4E1FAD) ── */
+
+/* Active: purple pill, white text — targets both leaf links and folder buttons */
+.nextra-sidebar li.active > a,
+.nextra-sidebar li.active > button {
+  background-color: #4E1FAD !important;
+  color: white !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+}
+
+/* Arrow icon inside active folder buttons */
+.nextra-sidebar li.active > button svg {
+  color: white !important;
+}
+
+/* Hover on inactive */
+.nextra-sidebar li:not(.active) > a:hover,
+.nextra-sidebar li:not(.active) > button:hover {
+  background-color: rgba(78, 31, 173, 0.08) !important;
+  color: hsl(var(--foreground)) !important;
+  border-radius: 8px !important;
+}
+
+html.dark .nextra-sidebar li:not(.active) > a:hover,
+.dark .nextra-sidebar li:not(.active) > a:hover,
+html.dark .nextra-sidebar li:not(.active) > button:hover,
+.dark .nextra-sidebar li:not(.active) > button:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+}
+
+/* ── Collapsed sidebar — strip card styling & padding ── */
+/* Wrapper gets .no-scrollbar when sidebar is collapsed (w-20) */
+.nextra-sidebar:has(> div.no-scrollbar) {
+  padding: 0 !important;
+}
+
+.nextra-sidebar > div.no-scrollbar {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Collapsed footer — also strip card look */
+.nextra-sidebar > div.no-scrollbar ~ .nextra-sidebar-footer {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ── Content typography ── */
+
+main[data-pagefind-body] > :first-child {
+  margin-top: 0;
+}
+
+main[data-pagefind-body] :is(pre, blockquote) {
+  border-radius: calc(var(--radius) + 4px);
+}
+
+/* Sidebar badge labels */
+.badge-new {
+  @apply dark:after:border-blue-200/30 dark:after:bg-blue-900/30 dark:after:text-blue-200;
+
+  &:after {
+    @apply ms-1.5 rounded-full border border-blue-200 bg-blue-100 px-1.5 text-xs font-bold text-blue-900 content-["New"];
+  }
+}

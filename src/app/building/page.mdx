@@ -1,0 +1,62 @@
+---
+title: Building
+description: Build, preview, and deploy your FM skins.
+searchable: true
+asIndexPage: true
+---
+
+import { Cards } from 'nextra/components'
+import { Eye, Hammer, Play, Archive } from 'lucide-react'
+
+# Building
+
+Once you've created your skin's CSS/USS files and assets, you need to build it to generate the modified bundle files that FM can use.
+
+<Cards>
+  <Cards.Card icon={<Eye />} title="Preview Build" href="/building/preview-build" />
+  <Cards.Card icon={<Hammer />} title="Full Build" href="/building/full-build" />
+  <Cards.Card icon={<Play />} title="Applying to Game" href="/building/applying-to-game" />
+  <Cards.Card icon={<Archive />} title="Backup & Restore" href="/building/backup-restore" />
+</Cards>
+
+## Build Process Overview
+
+FM Skin Builder:
+
+1. **Scans** FM's original bundle files
+2. **Parses** your CSS/USS and mapping configurations
+3. **Patches** the bundles with your changes
+4. **Outputs** modified bundles to your `packages/` folder
+
+## Quick Reference
+
+| Action | Use When |
+|--------|--------|
+| **Preview** | Testing changes and mappings are correct, no bundles created |
+| **Build** | Ready to test in FM, builds modified bundles in `packages/` |
+
+## Build Output
+
+After building, your project contains:
+
+```
+my-skin/
+├── config.json
+├── styles/
+    ├── mapping.json
+│   └── base.uss
+└── packages/           # Build output
+    └──  [modified bundles]
+```
+
+The `packages/` folder contents go into FM's skins directory.
+
+## Workflow
+
+1. **Edit** - Make changes to CSS/assets
+2. **Preview** - Quick validation (optional)
+3. **Build** - Generate output files
+4. **Apply to Game** - Copy to FMs installation directory
+5. **Launch game** - Reload skin in FM
+6. **Restore Backup** - Always restore backup before new build
+7. **Repeat** - Iterate until satisfied

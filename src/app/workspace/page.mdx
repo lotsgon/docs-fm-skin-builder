@@ -1,0 +1,64 @@
+---
+title: Workspace
+description: Learn how to create and manage skin projects in FM Skin Builder.
+searchable: true
+asIndexPage: true
+---
+
+import { Cards } from 'nextra/components'
+import { FolderPlus, FolderOpen, Settings } from 'lucide-react'
+
+# Workspace
+
+The workspace section covers everything about managing your skins - from creating new skins to organizing files and configuring your skin's settings.
+
+<Cards>
+  <Cards.Card icon={<FolderPlus />} title="Creating Skins" href="/workspace/creating-skins" />
+  <Cards.Card icon={<FolderOpen />} title="File Browser" href="/workspace/file-browser" />
+  <Cards.Card icon={<Settings />} title="Skin Configuration" href="/workspace/skin-config" />
+</Cards>
+
+## Project Structure Overview
+
+Every FM Skin Builder project follows this basic structure:
+
+```
+my-skin/
+├── config.json             # Required: Skin metadata and settings
+├── styles/                 # CSS/USS files for color definitions
+│   ├── base.uss            # Main color definitions
+│   └── mapping.json        # Per-stylesheet targeting (optional)
+├── graphics/               # Visual assets (optional)
+│   ├── icons/              # Icon replacements
+│       ├── icon.png        # Icon files
+│       └── mapping.json    # Per-icon targeting (optional)
+│   └── backgrounds/        # Background images
+│       ├── background.png  # Image files
+│       └── mapping.json    # Per-image targeting (optional)
+├── fonts/                  # Visual assets (optional)
+│   ├── font.ttf            # Font replacements
+│   └── mapping.json        # Per-font targeting (optional)
+├── panels/                 # Visual assets (optional)
+│   └── panel.uxml          # Panel customizations (file exported from bundle)
+├── tile-layouts/           # Visual assets (optional)
+│   └── layout.json         # Tile layout customizations (file exported from bundle)
+├── table-views/            # Visual assets (optional)
+│   └── table.json          # Table view customizations (file exported from bundle)
+└── packages/               # Build output (auto-generated)
+```
+
+**Required files:**
+- `config.json` - The only truly required file
+
+**Common additions:**
+- At least one `.uss` or `.css` file with your color changes
+- Asset folders with `mapping.json` for icons/backgrounds
+
+## Workflow
+
+1. **Create** a new project using the wizard or manually
+2. **Organize** your files in the Explorer panel
+3. **Configure** your skin in `config.json`
+4. **Edit** CSS files and assets
+5. **Build** to generate modified bundles
+6. **Test** in Football Manager

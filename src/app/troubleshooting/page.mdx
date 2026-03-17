@@ -1,0 +1,56 @@
+---
+title: Troubleshooting
+description: Solve common issues with FM Skin Builder.
+searchable: true
+asIndexPage: true
+---
+
+import { Cards } from 'nextra/components'
+import { HelpCircle, Bug } from 'lucide-react'
+
+# Troubleshooting
+
+This section helps you solve common issues when using FM Skin Builder.
+
+<Cards>
+  <Cards.Card icon={<HelpCircle />} title="Common Issues" href="/troubleshooting/common-issues" />
+</Cards>
+
+## Quick Fixes
+
+### Skin Not Appearing in FM
+
+1. Check files are in correct skins folder
+2. Verify skin has its own subfolder
+3. Click refresh in FM Preferences
+4. Restart FM completely
+
+### Colors Not Changing
+
+1. Verify CSS variable names are correct
+2. Check CSS syntax (semicolons, braces)
+3. Rebuild after changes
+4. Reload skin in FM
+
+### Build Failing
+
+1. Check Output panel for errors
+2. Fix JSON syntax in config.json
+3. Fix CSS syntax errors
+4. Verify include paths exist
+
+### App Won't Start
+
+1. Check OS meets requirements
+2. Try redownloading installer
+3. Run as administrator (Windows)
+4. Allow in Security settings (macOS)
+
+## Getting Help
+
+If these guides don't solve your issue:
+
+1. Check the specific error message
+2. Search the documentation
+3. Report issues on GitHub
+4. Joing our discord for community help

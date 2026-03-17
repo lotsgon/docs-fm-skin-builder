@@ -1,0 +1,220 @@
+---
+title: Sprite Atlases
+description: Work with FM's sprite sheets and atlas textures.
+searchable: true
+---
+
+import { ScreenshotPlaceholder } from "@/components/docs";
+
+# Sprite Atlases
+
+Football Manager uses sprite atlases - single images containing multiple smaller sprites packed together. Understanding atlases helps you make more targeted replacements.
+
+## What is a Sprite Atlas?
+
+A sprite atlas is a large image containing many smaller images (sprites) arranged in a grid or packed layout:
+
+**Benefits:**
+- Efficient memory usage
+- Faster loading
+- Batch rendering
+
+**For skinning:**
+- You may need to replace entire atlases
+- Or target individual sprites within them
+
+## Viewing Atlases
+
+### Asset Catalogue
+
+The [Asset Catalogue](/catalogue) shows sprites from FM's atlases:
+
+<ScreenshotPlaceholder
+  id="catalogue-sprites"
+  alt="Sprite viewer in Asset Catalogue"
+  caption="Browse individual sprites from FM's atlases"
+/>
+
+Each sprite shows:
+- Sprite name
+- Dimensions
+- Source atlas
+- Position within atlas
+
+### Bundle Viewer
+
+1. Go to [Bundle Viewer](/tools/bundle-viewer)
+2. Find relevant bundle (e.g. `ui-iconsspriteatlases`)
+3. View files
+
+## Sprite Replacement
+
+### Option 2: Replace Individual Sprites
+
+Target specific sprites by name:
+
+```json
+{
+  "my-star.png": "icon_star_gold",
+  "my-arrow.png": "icon_arrow_up"
+}
+```
+
+FM Skin Builder patches these into the atlas automatically.
+
+<ScreenshotPlaceholder
+  id="replace-sprite"
+  alt="Replacing individual sprites"
+  caption="Individual sprites replaced within the atlas"
+/>
+
+### Option 2: Replace Entire Atlas (Not Recommended)
+
+Replace the whole atlas image:
+
+```json
+{
+  "ui_icons_atlas.png": "my-icons-atlas"
+}
+```
+
+**Requirements:**
+- Your image must match exact dimensions
+- All sprites positioned correctly
+- Most complex but most control
+
+## Finding Sprite Names
+
+### Search the Catalogue
+
+1. Go to [Asset Catalogue](/catalogue)
+2. Filter by "Sprites"
+3. Search by visual appearance or name
+4. Copy sprite names for mapping
+
+### Bundle Viewer
+
+1. Go to [Bundle Viewer](/tools/bundle-viewer)
+2. Find relevant bundle (e.g. `ui-icons`)
+3. View files
+
+### Common Patterns
+
+| Pattern | Contains |
+|---------|----------|
+| `icon_*` | General UI icons |
+| `button_*` | Button graphics |
+| `flag_*` | Country flags |
+| `badge_*` | Badges and emblems |
+
+## Creating Replacements
+
+### For Individual Sprites
+
+Match the sprite's dimensions exactly:
+
+1. Find sprite dimensions
+2. Create your image at that size
+3. Map by sprite name
+
+**Example:**
+
+Sprite `icon_star_gold` is 32x32.
+
+1. Create `graphics/icons/my-star.png` at 32x32
+2. Map it:
+```json
+{
+  "my-star.png": "icon_star_gold"
+}
+```
+
+## Multi-Resolution Support
+
+Some atlases have multiple resolutions:
+
+```
+ui_icons_atlas.png       (1x)
+ui_icons_atlas@2x.png    (2x)
+ui_icons_atlas@4x.png    (4x)
+```
+
+**For best results:**
+- Provide matching resolution variants
+- Use wildcards with 4x support to start with, the 2x and 1x will be generated automatically
+- Or let FM scale (may reduce quality)
+
+```json
+{
+  "my-sprite_1x.png": "in-game-sprite_1x",
+  "my-sprite_2x.png": "in-game-sprite_2x",
+  "my-sprite_3x.png": "in-game-sprite_3x",
+  "my-sprite_4x.png": "in-game-sprite_4x",
+  /* OR wildcards*/
+  "my-sprite.png": "in-game-sprite_*",
+}
+```
+
+## Tips and Best Practices
+
+### Match Exact Dimensions
+
+Sprites must be exactly the right size:
+- Too large → clipped
+- Too small → stretched or misaligned
+
+### Maintain Transparency
+
+For icons:
+- Use PNG format
+- Preserve alpha channel
+- Match original transparency
+
+### Test Each Replacement
+
+Replace one sprite at a time:
+1. Map single sprite
+2. Build
+3. Verify it appears correctly
+4. Continue with more
+
+### Use Wildcards Carefully
+
+```json
+{
+  "my-star.png": "my-star_*"  // Replaces ALL star sprites with same image
+}
+```
+
+Good for consistent replacements, but may cause issues if sprites have different sizes.
+
+## Troubleshooting
+
+### "Sprite looks wrong"
+
+- Dimensions don't match original
+- Position offset in atlas changed
+- Transparency not preserved
+
+### "Sprite not appearing"
+
+- Wrong sprite name (check catalogue)
+- Mapping file in wrong folder
+- Folder not in config `includes`
+
+### "Atlas looks corrupted"
+
+When replacing entire atlas:
+- Dimensions must match exactly
+- All sprite positions must be preserved
+- Format must be compatible
+
+### "Some sprites replaced, others not"
+
+- Multiple atlases may contain similar sprites
+- Try more specific sprite names
+- Check which atlas each sprite belongs to
+
+---
+
+**Next:** [Font Replacement](/assets/font-replacement) - Add custom fonts.
